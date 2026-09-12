@@ -1,0 +1,48 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+  max-width: 760px;
+}
+
+.step {
+  display: flex;
+  gap: 24px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--ink-12);
+}
+
+.step:first-child {
+  padding-top: 0;
+}
+
+.stepIndex {
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  color: var(--accent);
+  line-height: 1;
+  min-width: 52px;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stepTitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.stepText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-70);
+  max-width: 560px;
+}

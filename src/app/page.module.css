@@ -1,0 +1,10 @@
+.main {
+  padding-left: var(--rail-w);
+}
+
+@media (max-width: 899px) {
+  .main {
+    padding-left: 0;
+    padding-top: 57px;
+  }
+}

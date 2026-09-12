@@ -1,0 +1,304 @@
+[
+  {
+    "slug": "chess-engine",
+    "name": "Chess Engine",
+    "tagline": "Moteur d'échecs en Rust : négamax + élagage alpha-bêta, quiescence, correction du générateur de coups prouvée par perft, protocole UCI.",
+    "stack": ["Rust"],
+    "year": 2026,
+    "status": "livré",
+    "highlight": true
+  },
+  {
+    "slug": "physics-engine",
+    "name": "Physics Engine",
+    "tagline": "Moteur physique 2D en Rust : détection SAT, résolution par impulsions séquentielles avec warm starting, friction de Coulomb.",
+    "stack": ["Rust"],
+    "year": 2026,
+    "status": "livré",
+    "highlight": true
+  },
+  {
+    "slug": "rust-fs",
+    "name": "File System for OS",
+    "tagline": "Système de fichiers en Rust monté réellement via FUSE : journalisation en écriture anticipée, fichiers creux, vraies opérations POSIX.",
+    "stack": ["Rust", "FUSE"],
+    "year": 2026,
+    "status": "livré",
+    "highlight": true
+  },
+  {
+    "slug": "realtime-sketch",
+    "name": "Dessine & Devine",
+    "tagline": "Jeu multijoueur temps réel (Rust/Axum + WebSocket) : un salon = une tâche Tokio dédiée, scoring dégressif, classement persisté.",
+    "stack": ["Rust", "Axum", "WebSocket", "Postgres"],
+    "year": 2026,
+    "status": "livré",
+    "highlight": true
+  },
+  {
+    "slug": "neural-net-from-scratch",
+    "name": "Neural Network from Scratch",
+    "tagline": "Perceptron multicouche en NumPy pur, rétropropagation dérivée à la main, prouvée par vérification numérique du gradient.",
+    "stack": ["Python", "NumPy"],
+    "year": 2026,
+    "status": "livré",
+    "highlight": true
+  },
+  {
+    "slug": "ecommerce-platform",
+    "name": "E-Commerce Platform",
+    "tagline": "Plateforme e-commerce (Node/Express) : anti-survente atomique, paiement Stripe Checkout testé, webhooks idempotents.",
+    "stack": ["Node.js", "Express", "SQLite"],
+    "year": 2026,
+    "status": "livré",
+    "highlight": true
+  },
+  {
+    "slug": "auth-system",
+    "name": "Auth System",
+    "tagline": "Système d'authentification (Rust/Axum) : Argon2id, JWT courts, refresh tokens avec rotation et détection de rejeu.",
+    "stack": ["Rust", "Axum", "Postgres"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "self-healing-docs",
+    "name": "Self Healing Technical Docs",
+    "tagline": "Outil qui détecte la dérive code/documentation par analyse AST et répare automatiquement les sections concernées.",
+    "stack": ["Python", "LlamaIndex"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "failure-forensics",
+    "name": "Failure Forensics for AI",
+    "tagline": "Diagnostic post-mortem d'un pipeline d'inférence : détection de régression par test statistique, export Prometheus, dashboard Grafana.",
+    "stack": ["Python", "Prometheus", "Grafana"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "llm-cost-autopilot",
+    "name": "LLM Cost Autopilot",
+    "tagline": "Routeur de requêtes LLM (Rust) : estimation de complexité sans appel réseau, budget quotidien, disjoncteur adaptatif par route.",
+    "stack": ["Rust"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "model-regression-detection",
+    "name": "Model Regression Detection",
+    "tagline": "Détection de dérive de données et de régression de performance en production, verdict combiné via test statistique.",
+    "stack": ["Python", "Scikit-learn", "MLflow"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "trading-dashboard",
+    "name": "Trading Dashboard",
+    "tagline": "Suivi de portefeuille simulé et indicateurs techniques (SMA/EMA/RSI) — aucun ordre réel, aucun conseil financier.",
+    "stack": ["Python", "FastAPI"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "face-verification",
+    "name": "Face Verification",
+    "tagline": "Vérification faciale 1:1 sur galerie fermée et consentie, réseau siamois entraîné avec loss contrastive.",
+    "stack": ["Python", "PyTorch"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "hand-gesture-recognition",
+    "name": "Hand Gesture Recognition",
+    "tagline": "Reconnaissance de 8 gestes de la main isolés à partir de landmarks MediaPipe, classifieur MLP entraîné sur données synthétiques.",
+    "stack": ["Python", "PyTorch", "MediaPipe"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "gis-explorer",
+    "name": "GIS Explorer",
+    "tagline": "Système d'information géographique en Python pur : géométrie sans dépendance, requêtes spatiales, visualiseur Leaflet.",
+    "stack": ["Python", "Leaflet"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "digital-footprint-audit",
+    "name": "Digital Footprint Audit",
+    "tagline": "Audit de sa propre empreinte numérique : vérification de pseudo, mot de passe compromis via k-anonymity, lookup WHOIS.",
+    "stack": ["Python", "asyncio", "httpx"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "face-blur-identity-protection",
+    "name": "Face-Blur / Identity Protection",
+    "tagline": "Outil de protection : anonymisation de visages par flou, pixelisation ou masquage, détection géométrique injectable et testable.",
+    "stack": ["Python", "OpenCV"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "thermal-camera-sim",
+    "name": "Thermal Camera Sim",
+    "tagline": "Simulation honnête d'une caméra thermique : palettes IR, flou gaussien, contraste auto, détection du point le plus chaud.",
+    "stack": ["Python", "OpenCV", "NumPy"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "gravity-simulation",
+    "name": "Gravity Simulation",
+    "tagline": "Moteur N-corps en Rust : intégrateurs permutables, présets (système solaire, binaire, huit de Chenciner–Montgomery).",
+    "stack": ["Rust"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "double-pendulum",
+    "name": "Double Pendulum",
+    "tagline": "Simulation du pendule double : équations de Hamilton, intégrateur symplectique, analyse du chaos par exposant de Lyapunov.",
+    "stack": ["Python", "Matplotlib", "SciPy"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "solar-system",
+    "name": "Solar System",
+    "tagline": "Système solaire en 3D dans le navigateur : bloom, shaders, textures HD, caméra suiveuse.",
+    "stack": ["JavaScript", "Three.js"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "weather-live-board",
+    "name": "Weather Live Board",
+    "tagline": "Tableau de relevés météo/terrain simulés en direct, diffusion WebSocket par zone, présence en temps réel.",
+    "stack": ["Rust", "Tokio", "WebSocket"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "music-player",
+    "name": "Music Player",
+    "tagline": "Lecteur audio de bureau (Rust/Tauri) : bibliothèque locale, file d'attente, playlists persistées, égaliseur 3 bandes maison.",
+    "stack": ["Rust", "Tauri", "Vue"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "task-manager-app",
+    "name": "Task Manager App",
+    "tagline": "Gestionnaire de tâches Kanban : colonnes, drag & drop natif, tags, sous-tâches, commentaires.",
+    "stack": ["Node.js", "Express", "Vue"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "expense-tracker",
+    "name": "Expense Tracker",
+    "tagline": "Suivi de dépenses : budgets mensuels par catégorie, transactions récurrentes, dashboard en SVG fait main.",
+    "stack": ["Node.js", "Express", "Vue"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "reading-tracker",
+    "name": "Reading Tracker",
+    "tagline": "Catalogue manga/manhwa/manhua/novels (100% AniList) : bibliothèque personnelle, recommandations par similarité.",
+    "stack": ["Django", "DRF"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "poem-generator",
+    "name": "Poem Generator",
+    "tagline": "Générateur de poèmes bilingue FR/EN : moteur maison par défaut, upgrade LLM optionnel.",
+    "stack": ["Next.js", "TypeScript", "Prisma"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "price-tracker-bot",
+    "name": "Price Tracker Bot",
+    "tagline": "Bot de suivi de prix : scraping par sélecteur CSS générique, historique versionné, cron GitHub Actions en production.",
+    "stack": ["Python", "BeautifulSoup"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "manga-quoting",
+    "name": "KOMA — Manga Quoting",
+    "tagline": "Base de citations manga : design minimaliste papier/encre, recherche par série et thème, API REST publique.",
+    "stack": ["Django", "DRF"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "movie-catalog-web",
+    "name": "Movie Catalog Web",
+    "tagline": "Catalogue de films/séries, likes et recommandations personnalisées, sans backend ni clé API.",
+    "stack": ["HTML", "JavaScript"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "movie-recommender",
+    "name": "Movie Recommender",
+    "tagline": "CLI de recommandation de films aléatoire via l'API TMDB, mode démo sans clé.",
+    "stack": ["Python"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "pixel-art-editor",
+    "name": "Pixel Art Editor",
+    "tagline": "Éditeur pixel art dans le navigateur : calques × frames, animation avec prévisualisation, undo/redo par trait.",
+    "stack": ["JavaScript", "Canvas"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "socket-messenger",
+    "name": "Socket Messenger",
+    "tagline": "Messagerie réseau bas niveau : serveur TCP multi-client, protocole JSON Lines, découverte UDP par broadcast.",
+    "stack": ["Python", "socket"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "connect-four",
+    "name": "Puissance 4",
+    "tagline": "Puissance 4 avec IA minimax (alpha-bêta) et mode 2 joueurs en ligne par sockets TCP.",
+    "stack": ["Python", "Pygame"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "snake-clone",
+    "name": "Snake Clone",
+    "tagline": "Snake classique avec meilleur score persistant, écriture atomique du fichier de score.",
+    "stack": ["Python", "Pygame"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "typing-speedtest",
+    "name": "Typing Speedtest",
+    "tagline": "Test de vitesse de frappe léger, accessibilité clavier renforcée.",
+    "stack": ["Astro", "JavaScript"],
+    "year": 2026,
+    "status": "livré"
+  },
+  {
+    "slug": "ascii-camera",
+    "name": "ASCII Camera",
+    "tagline": "Conversion webcam en art ASCII en direct : rendu couleur, export vidéo, contraste automatique.",
+    "stack": ["Python", "OpenCV"],
+    "year": 2026,
+    "status": "livré"
+  }
+]

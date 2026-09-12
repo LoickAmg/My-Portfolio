@@ -1,0 +1,132 @@
+.grid {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+.copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 640px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--ink-55);
+  text-transform: uppercase;
+}
+
+.eyebrowLine {
+  width: 20px;
+  height: 1px;
+  background: var(--ink-40);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 76px);
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.headingAccent {
+  color: var(--accent);
+}
+
+.intro {
+  margin: 0;
+  max-width: 480px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-70);
+}
+
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 26px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  clip-path: polygon(0 0, 92% 0, 100% 30%, 100% 100%, 8% 100%, 0 70%);
+}
+
+.ctaSecondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 4px;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink-12);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statIndex {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-40);
+}
+
+.statLabel {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dialogueWrap {
+  flex: 0 0 460px;
+  max-width: 460px;
+}
+
+@media (max-width: 1099px) {
+  .grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dialogueWrap {
+    flex: 1 1 auto;
+    max-width: 520px;
+  }
+}

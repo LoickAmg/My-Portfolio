@@ -1,0 +1,123 @@
+.panel {
+  position: relative;
+  width: 100%;
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--ink-12);
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 92% 100%, 0 100%);
+  padding: 28px 26px 32px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-55);
+  text-transform: uppercase;
+}
+
+.speaker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+}
+
+.avatarShape {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--moon-blue), var(--moon-blue-deep));
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.avatarLetter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.nameTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px 7px 12px;
+  background: var(--accent);
+  clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
+}
+
+.nameTagText {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--accent-ink);
+  text-transform: uppercase;
+}
+
+.line {
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--ink-25);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  clip-path: polygon(0 0, 96% 0, 100% 100%, 4% 100%);
+}
+
+.choicePrimary {
+  border: none;
+  background: var(--accent);
+}
+
+.choiceKey {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--ink-55);
+}
+
+.choicePrimary .choiceKey {
+  color: var(--accent-ink);
+}
+
+.choiceLabel {
+  flex: 1;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.choicePrimary .choiceLabel {
+  color: var(--accent-ink);
+}

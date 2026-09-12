@@ -1,0 +1,117 @@
+/*
+ * Design tokens — direction artistique "Persona 3 Reload" (palette officielle
+ * du projet) avec une architecture d'accent réversible héritée de la maquette
+ * validée (voir cadrage-nouveaux-projets.md, §5.3).
+ *
+ * data-accent="p3r" (défaut, décision finale) — bleu-nuit / bleu-lune uniquement.
+ * data-accent="p5"  (option conservée, non activée) — ajoute l'accent rouge P5R.
+ *
+ * Ne jamais changer la valeur par défaut de data-accent sans demande explicite.
+ */
+
+:root {
+  /* Fonds */
+  --bg-void: #0a0d18;
+  --bg-panel: #0f1424;
+  --bg-panel-alt: #12182b;
+  --bg-bubble: #171d34;
+  --bg-tag: #1b2340;
+
+  /* Encre / texte */
+  --ink: #eef1f8;
+  --ink-70: rgba(238, 241, 248, 0.7);
+  --ink-55: rgba(238, 241, 248, 0.55);
+  --ink-40: rgba(238, 241, 248, 0.4);
+  --ink-25: rgba(238, 241, 248, 0.25);
+  --ink-12: rgba(238, 241, 248, 0.12);
+
+  /* Bleu-lune (Persona 3 Reload) */
+  --moon-blue: #4d6bff;
+  --moon-blue-deep: #1c2b6b;
+
+  /* Accent rouge (Persona 5 Royal) — réservé, non actif par défaut */
+  --royal-red: #e6162d;
+  --royal-red-deep: #732424;
+
+  /* État */
+  --state-online: #4caf6a;
+
+  /* Accent actif : piloté par data-accent sur <html> */
+  --accent: var(--moon-blue);
+  --accent-deep: var(--moon-blue-deep);
+  --accent-ink: var(--bg-void);
+
+  /* Typo — polices auto-hébergées via @fontsource (voir layout.tsx) */
+  --font-display: "Anton", sans-serif;
+  --font-body: "Sora", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Rythme */
+  --rail-w: 96px;
+  --content-max: 1200px;
+}
+
+:root[data-accent="p5"] {
+  --accent: var(--royal-red);
+  --accent-deep: var(--royal-red-deep);
+  --accent-ink: var(--ink);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  color-scheme: dark;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100%;
+  background: var(--bg-void);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

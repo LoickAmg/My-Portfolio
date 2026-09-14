@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 24px;
   max-width: 620px;
+  transform: rotate(-0.6deg);
 }
 
 .intro {
@@ -27,7 +28,15 @@
   padding: 16px 20px;
   background: var(--bg-panel);
   border: 1px solid var(--ink-12);
+  border-left: 4px solid var(--ink-25);
   clip-path: polygon(0 0, 97% 0, 100% 100%, 3% 100%);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.link:hover {
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.35);
+  transform: translate(-2px, -2px);
 }
 
 .linkLeft {
@@ -65,9 +74,12 @@
 .signalCta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  align-self: flex-start;
-  padding: 14px 22px;
+  justify-content: space-between;
+  gap: 14px;
+  align-self: stretch;
+  width: 100%;
+  max-width: 340px;
+  padding: 14px 20px;
   background: var(--accent);
   color: var(--accent-ink);
   border: none;
@@ -76,4 +88,11 @@
   font-size: 13px;
   cursor: pointer;
   clip-path: polygon(0 0, 92% 0, 100% 30%, 100% 100%, 8% 100%, 0 70%);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.signalCta:hover {
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.4);
+  transform: translate(-2px, -2px);
 }

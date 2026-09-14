@@ -10,6 +10,8 @@
   background: var(--bg-panel);
   overflow: hidden;
   clip-path: polygon(0 0, 96% 0, 100% 4%, 100% 100%, 4% 100%, 0 96%);
+  transform: rotate(-0.8deg);
+  box-shadow: 9px 9px 0 rgba(0, 0, 0, 0.35);
 }
 
 .header {
@@ -94,19 +96,22 @@
   padding: 11px 15px;
   font-size: 13px;
   line-height: 1.5;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
 .bubbleUser {
   background: var(--bg-tag);
   color: var(--ink-70);
   font-family: var(--font-mono);
-  clip-path: polygon(0 0, 100% 0, 100% 82%, 94% 100%, 0 100%);
+  border-right: 3px solid var(--accent);
+  clip-path: polygon(0 0, 100% 0, 100% 78%, 88% 100%, 0 100%);
 }
 
 .bubbleSystem {
   background: var(--bg-bubble);
   color: var(--ink);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 6% 100%, 0 82%);
+  border-left: 3px solid var(--ink-25);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12% 100%, 0 78%);
 }
 
 .bubbleSystem + .bubbleSystem {

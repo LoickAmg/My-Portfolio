@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { SECTIONS } from "@/lib/sections";
 import projectsData from "@/data/projects.json";
 import type { Project } from "@/lib/types";
@@ -19,9 +19,11 @@ function sortProjects(list: Project[]): Project[] {
   });
 }
 
+// Présentation en fil de messages : chaque projet est une ligne succincte
+// (nom + aperçu tronqué), le clic déplie le détail complet (tagline entière,
+// stack, statut, lien repo) — aucune donnée nouvelle n'est inventée, on ne
+// fait que révéler ce qui était déjà dans projects.json.
 export default function Projects() {
-  // Filtre par langage/techno principal (premier élément de `stack`) plutôt
-  // que par tag exhaustif, pour garder la barre de filtres lisible sur mobile.
   const primaryStacks = useMemo(() => {
     const set = new Set<string>();
     projects.forEach((p) => set.add(p.stack[0]));
@@ -29,6 +31,7 @@ export default function Projects() {
   }, []);
 
   const [filter, setFilter] = useState<string | null>(null);
+  const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   const visible = useMemo(() => {
     const list = filter ? projects.filter((p) => p.stack[0] === filter) : projects;
@@ -70,35 +73,89 @@ export default function Projects() {
             ))}
           </div>
 
-          <motion.div layout className={styles.grid}>
-            {visible.map((p) => (
-              <motion.div
-                key={p.slug}
-                layout
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`${styles.card} ${
-                  p.highlight ? styles.cardHighlight : ""
-                }`}
-              >
-                <div className={styles.cardTop}>
-                  <h3 className={styles.cardName}>{p.name}</h3>
-                  {p.highlight && (
-                    <span className={styles.cardBadge}>Repère</span>
-                  )}
-                </div>
-                <p className={styles.cardTagline}>{p.tagline}</p>
-                <div className={styles.cardStack}>
-                  {p.stack.map((s) => (
-                    <span key={s} className={styles.stackTag}>
-                      {s}
+          <p className={styles.hint}>Clique un projet pour déplier le détail.</p>
+
+          <motion.ul layout className={styles.thread}>
+            {visible.map((p) => {
+              const isOpen = openSlug === p.slug;
+              return (
+                <motion.li
+                  key={p.slug}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className={styles.msgWrap}
+                >
+                  <button
+                    type="button"
+                    className={`${styles.msg} ${isOpen ? styles.msgOpen : ""} ${
+                      p.highlight ? styles.msgHighlight : ""
+                    }`}
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenSlug(isOpen ? null : p.slug)}
+                  >
+                    <span className={styles.avatar} aria-hidden="true">
+                      {p.name.charAt(0)}
                     </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                    <span className={styles.msgBody}>
+                      <span className={styles.msgTop}>
+                        <span className={styles.msgName}>{p.name}</span>
+                        <span className={styles.msgMeta}>
+                          {p.stack[0]} · {p.year}
+                        </span>
+                      </span>
+                      <span className={styles.msgPreview}>{p.tagline}</span>
+                    </span>
+                    {p.highlight && (
+                      <span className={styles.msgBadge}>Repère</span>
+                    )}
+                    <span className={styles.chevron} aria-hidden="true">
+                      {isOpen ? "–" : "+"}
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22 }}
+                        className={styles.detailWrap}
+                      >
+                        <div className={styles.detail}>
+                          <p className={styles.detailText}>{p.tagline}</p>
+                          <div className={styles.detailStack}>
+                            {p.stack.map((s) => (
+                              <span key={s} className={styles.stackTag}>
+                                {s}
+                              </span>
+                            ))}
+                          </div>
+                          <div className={styles.detailFoot}>
+                            <span className={styles.detailStatus}>
+                              {p.status} · {p.year}
+                            </span>
+                            {p.repoUrl && (
+                              <a
+                                href={p.repoUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className={styles.detailLink}
+                              >
+                                Voir le repo ↗
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.li>
+              );
+            })}
+          </motion.ul>
 
           <p className={styles.count}>
             {visible.length} / {projects.length} projets livrés

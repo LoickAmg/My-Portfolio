@@ -1,62 +1,40 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Contact from "../Contact";
 
+vi.mock("@/lib/scroll", () => ({
+  scrollToSection: vi.fn(),
+}));
+
 describe("<Contact />", () => {
-  it("affiche l'écran de téléphone avec la liste de conversations", () => {
+  it("affiche les liens de contact avec les labels", () => {
     render(<Contact />);
 
-    expect(screen.getByText(/Connexion établie/i)).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByText("GitHub")).toBeInTheDocument();
     expect(screen.getByText("LinkedIn")).toBeInTheDocument();
-    expect(screen.getByText("Signal")).toBeInTheDocument();
   });
 
-  it("affiche le formulaire de saisie SMS", () => {
+  it("affiche les valeurs des liens comme 'à confirmer'", () => {
     render(<Contact />);
 
-    const input = screen.getByLabelText("Message");
-    expect(input).toBeInTheDocument();
-    expect(input).toHaveValue("");
-    expect(input).toHaveAttribute("placeholder", "Tapez un message…");
+    const pending = screen.getAllByText("à confirmer");
+    expect(pending.length).toBeGreaterThanOrEqual(3);
   });
 
-  it("envoie un message utilisateur et affiche une réponse système", async () => {
-    const user = userEvent.setup();
+  it("affiche le bouton Signal", () => {
     render(<Contact />);
 
-    const input = screen.getByLabelText("Message");
-    await user.type(input, "whoami");
-    await user.click(screen.getByRole("button", { name: "Envoyer" }));
-
-    expect(
-      await screen.findByText(/whoami/, { selector: '[data-testid="message-bubble"]' })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Reçu à \d{2}h\d{2} — je te réponds sous 24h/i)
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Signal/i })).toBeInTheDocument();
   });
 
-  it("vide le fil sur la commande 'clear'", async () => {
-    const user = userEvent.setup();
+  it("affiche l'intro et le titre", () => {
     render(<Contact />);
 
-    const input = screen.getByLabelText("Message");
-    await user.type(input, "whoami");
-    await user.click(screen.getByRole("button", { name: "Envoyer" }));
-
+    expect(screen.getByRole("heading", { name: "Contact" })).toBeInTheDocument();
     expect(
-      await screen.findByText(/whoami/, { selector: '[data-testid="message-bubble"]' })
+      screen.getByText(/Phrase d'invitation au contact/i)
     ).toBeInTheDocument();
-
-    await user.type(input, "clear");
-    await user.click(screen.getByRole("button", { name: "Envoyer" }));
-
-    expect(
-      screen.queryByText(/whoami/, { selector: '[data-testid="message-bubble"]' })
-    ).not.toBeInTheDocument();
-    expect(screen.getByText(/Connexion établie/i)).toBeInTheDocument();
   });
 });

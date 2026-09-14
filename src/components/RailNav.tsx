@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SECTIONS } from "@/lib/sections";
 import { useScrollSpy } from "@/lib/useScrollSpy";
 import { scrollToSection } from "@/lib/scroll";
+import ThemeToggle from "./ThemeToggle";
 import styles from "./RailNav.module.css";
 
 export default function RailNav() {
@@ -49,6 +50,8 @@ export default function RailNav() {
           ))}
         </div>
 
+        <ThemeToggle className={styles.railThemeToggle} />
+
         <span className={styles.vertical}>PORTFOLIO / 2026</span>
       </nav>
 
@@ -66,17 +69,21 @@ export default function RailNav() {
           </span>
         </button>
 
-        <button
-          type="button"
-          className={styles.menuBtn}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className={styles.mobileActions}>
+          <ThemeToggle className={styles.mobileThemeToggle} />
+
+          <button
+            type="button"
+            className={styles.menuBtn}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

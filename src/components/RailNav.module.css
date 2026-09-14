@@ -94,6 +94,10 @@
   opacity: 1;
 }
 
+.railThemeToggle {
+  margin-top: 4px;
+}
+
 .vertical {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -155,6 +159,16 @@
   text-transform: uppercase;
 }
 
+.mobileActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileThemeToggle {
+  /* Sélecteur dédié (hérite du style de base .toggle) */
+}
+
 .menuBtn {
   display: flex;
   flex-direction: column;
@@ -198,7 +212,7 @@
 }
 
 .menuItem[aria-current="true"] {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .menuIndex {

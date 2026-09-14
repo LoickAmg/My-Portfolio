@@ -100,7 +100,7 @@
 
 .msgOpen .avatar {
   background: var(--accent-ink);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .msgBody {
@@ -163,7 +163,7 @@
 
 .msgOpen .msgBadge {
   background: var(--accent-ink);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .chevron {
@@ -231,7 +231,7 @@
 .detailLink {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
 }
 

@@ -20,7 +20,7 @@
   font-family: var(--font-display);
   font-weight: 400;
   font-size: 32px;
-  color: var(--accent);
+  color: var(--accent-text);
   line-height: 1;
   min-width: 52px;
 }

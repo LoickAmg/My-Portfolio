@@ -7,10 +7,17 @@
  * data-accent="p5"  (option conservée, non activée) — ajoute l'accent rouge P5R.
  *
  * Ne jamais changer la valeur par défaut de data-accent sans demande explicite.
+ *
+ * data-theme="dark" (défaut) | "light" — bascule sombre/clair, pilotée par
+ * ThemeToggle.tsx + un script bloquant dans layout.tsx (évite le flash au
+ * chargement). Persisté en localStorage, initialisé sur la préférence système
+ * si rien n'est enregistré. Tous les composants utilisent déjà les tokens
+ * ci-dessous plutôt que des couleurs en dur : le mode clair n'a donc besoin
+ * d'aucune autre modification que les overrides définis ici.
  */
 
 :root {
-  /* Fonds */
+  /* Fonds (mode sombre, défaut) */
   --bg-void: #0a0d18;
   --bg-panel: #0f1424;
   --bg-panel-alt: #12182b;
@@ -40,6 +47,9 @@
   --accent: var(--moon-blue);
   --accent-deep: var(--moon-blue-deep);
   --accent-ink: var(--bg-void);
+  /* Variante utilisée quand l'accent sert de couleur de TEXTE (pas de fond) —
+     assombrie en mode clair pour rester lisible sur un fond pâle. */
+  --accent-text: var(--accent);
 
   /* Typo — polices auto-hébergées via @fontsource (voir layout.tsx) */
   --font-display: "Anton", sans-serif;
@@ -57,6 +67,23 @@
   --accent-ink: var(--ink);
 }
 
+:root[data-theme="light"] {
+  --bg-void: #f4f6fb;
+  --bg-panel: #ffffff;
+  --bg-panel-alt: #eef1f8;
+  --bg-bubble: #e8ecf7;
+  --bg-tag: #dfe5f5;
+
+  --ink: #0e1220;
+  --ink-70: rgba(14, 18, 32, 0.7);
+  --ink-55: rgba(14, 18, 32, 0.55);
+  --ink-40: rgba(14, 18, 32, 0.4);
+  --ink-25: rgba(14, 18, 32, 0.25);
+  --ink-12: rgba(14, 18, 32, 0.12);
+
+  --accent-text: #2c46c9;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -66,6 +93,10 @@
 html {
   height: 100%;
   color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 html,

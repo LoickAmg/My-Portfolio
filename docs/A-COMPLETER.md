@@ -54,11 +54,15 @@ sitemap.
 
 ## 3. Déploiement
 
-| Sujet | Action |
+Site en ligne : <https://my-portfolio-lemon-sigma-84.vercel.app>
+
+| Sujet | État |
 |---|---|
-| URL du site | Définir `NEXT_PUBLIC_SITE_URL` (ex. `https://mon-domaine.fr`). Sans elle, `sitemap.xml`, `robots.txt` et les images de partage pointent vers `localhost` |
-| HTTPS | À forcer côté hébergeur |
+| Adresse du site | Détectée automatiquement sur Vercel (`VERCEL_PROJECT_PRODUCTION_URL`). Pour un domaine personnalisé, définir `NEXT_PUBLIC_SITE_URL` dans les variables du projet Vercel |
+| HTTPS | En place (Vercel, HSTS actif) |
+| Polices | Téléchargées depuis Fontshare pendant le build (`prebuild`) |
 | Mesure d'audience | Aucune aujourd'hui. Si vous en ajoutez une : mettre à jour la page de confidentialité **avant**, et prévoir un consentement si l'outil dépose des traceurs |
+| Avant de communiquer l'adresse | Compléter le lien LinkedIn (« à confirmer » est visible sur la page d'accueil). Les pages légales sont en `noindex` tant qu'elles contiennent des `[À COMPLÉTER]` |
 
 ## 4. Polices : licence
 
@@ -79,7 +83,7 @@ lui-même au build ; il lui faut un accès réseau à `api.fontshare.com`.
 
 - [ ] Aucun marqueur `À COMPLÉTER` restant
 - [ ] `LEGAL_PAGES_READY = true`
-- [ ] `NEXT_PUBLIC_SITE_URL` défini en production
+- [x] Adresse du site en production (détectée sur Vercel)
 - [x] Audit des textes : fait, et appliqué en continu par `src/lib/__tests__/copy.test.ts`
 - [x] Contraste des couleurs : texte à 4,5:1 ou plus dans les deux thèmes (`--ink-40` et `--ink-25` restent réservés aux filets et séparateurs, jamais au texte)
 - [ ] Test sur mobile réel

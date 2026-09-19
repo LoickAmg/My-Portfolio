@@ -1,0 +1,196 @@
+.playground {
+  --pt: 96px;
+  --pb: 112px;
+}
+
+.intro {
+  margin: 0 0 32px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-70);
+  max-width: 600px;
+}
+
+.console {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.index {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink-12);
+}
+
+.tab {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 16px 12px 16px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ink-12);
+  border-left: 3px solid transparent;
+  color: var(--ink-70);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--ink);
+  background: var(--bg-panel);
+}
+
+.tabActive {
+  color: var(--ink);
+  background: var(--bg-tag);
+  border-left-color: var(--accent);
+}
+
+.tabNumber {
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+  color: var(--ink-55);
+}
+
+.tabActive .tabNumber {
+  color: var(--accent-text);
+}
+
+.tabBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tabName {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tabKind {
+  font-family: var(--font-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+
+.stage {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stage:fullscreen {
+  overflow: auto;
+  padding: 32px;
+  background: var(--bg-void);
+}
+
+.stageHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.stageTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stageTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.stageBlurb {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-55);
+}
+
+.fullscreen {
+  flex: none;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--ink-25);
+  color: var(--ink-70);
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.fullscreen:hover,
+.fullscreen:focus-visible {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.source {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-55);
+}
+
+.source a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.source a:hover,
+.source a:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 899px) {
+  .console {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .index {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-top: none;
+    gap: 6px;
+  }
+
+  .tab {
+    flex: 1 1 140px;
+    padding: 12px;
+    border: 1px solid var(--ink-12);
+    border-left-width: 3px;
+  }
+
+  .stageHead {
+    flex-direction: column;
+  }
+}

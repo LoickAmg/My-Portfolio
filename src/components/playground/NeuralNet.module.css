@@ -1,0 +1,19 @@
+.chart {
+  display: block;
+  width: 100%;
+  height: 56px;
+  margin-top: 4px;
+}
+
+.chartAxis {
+  stroke: var(--ink-25);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}

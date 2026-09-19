@@ -1,0 +1,96 @@
+.scene {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+}
+
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  padding: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-55);
+}
+
+.planetList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.planet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 8px;
+  background: transparent;
+  border: 1px solid var(--ink-12);
+  color: var(--ink-70);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.planet:hover,
+.planet:focus-visible {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.planetActive {
+  border-color: var(--accent);
+  color: var(--ink);
+  background: var(--bg-tag);
+}
+
+.swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardType {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+
+.cardName {
+  margin: -6px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.card dl {
+  grid-template-columns: 1fr;
+}
+
+.hint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-55);
+}

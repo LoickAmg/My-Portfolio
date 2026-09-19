@@ -5,11 +5,27 @@
   gap: 16px;
   flex-wrap: wrap;
   padding: 24px 56px;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-40);
+  color: var(--ink-55);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.legalLink {
+  color: var(--ink-55);
+  transition: color 0.15s ease;
+}
+
+.legalLink:hover,
+.legalLink:focus-visible {
+  color: var(--accent-text);
 }
 
 @media (max-width: 899px) {

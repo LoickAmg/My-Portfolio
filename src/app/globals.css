@@ -46,15 +46,18 @@
   /* Accent actif : piloté par data-accent sur <html> */
   --accent: var(--moon-blue);
   --accent-deep: var(--moon-blue-deep);
-  --accent-ink: var(--bg-void);
-  /* Variante utilisée quand l'accent sert de couleur de TEXTE (pas de fond) —
-     assombrie en mode clair pour rester lisible sur un fond pâle. */
-  --accent-text: var(--accent);
+  --accent-ink: #060911;
+  /* Variante de l'accent pour le TEXTE : éclaircie en sombre, assombrie en clair,
+     pour atteindre 4,5:1 (WCAG AA) sur tous les fonds du site. Le texte posé sur
+     un fond d'accent utilise --accent-ink. */
+  --accent-text: #6b83ff;
 
-  /* Typo — polices auto-hébergées via @fontsource (voir layout.tsx) */
-  --font-display: "Anton", sans-serif;
-  --font-body: "Sora", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* Typo — Stardom (titres) + Satoshi (texte, étiquettes, chiffres), chargées
+     par next/font dans layout.tsx. --font-label désigne le rôle "étiquette /
+     HUD / système" : Satoshi en capitales espacées, chiffres tabulaires. */
+  --font-display: var(--font-stardom), "Iowan Old Style", Georgia, serif;
+  --font-body: var(--font-satoshi), system-ui, sans-serif;
+  --font-label: var(--font-body);
 
   /* Rythme */
   --rail-w: 96px;
@@ -65,22 +68,25 @@
   --accent: var(--royal-red);
   --accent-deep: var(--royal-red-deep);
   --accent-ink: var(--ink);
+  --accent-text: var(--accent);
 }
 
 :root[data-theme="light"] {
   --bg-void: #f4f6fb;
-  --bg-panel: #ffffff;
+  --bg-panel: #fafbfe;
   --bg-panel-alt: #eef1f8;
   --bg-bubble: #e8ecf7;
   --bg-tag: #dfe5f5;
 
   --ink: #0e1220;
   --ink-70: rgba(14, 18, 32, 0.7);
-  --ink-55: rgba(14, 18, 32, 0.55);
+  --ink-55: rgba(14, 18, 32, 0.62);
   --ink-40: rgba(14, 18, 32, 0.4);
   --ink-25: rgba(14, 18, 32, 0.25);
   --ink-12: rgba(14, 18, 32, 0.12);
 
+  --accent: #4661f2;
+  --accent-ink: #ffffff;
   --accent-text: #2c46c9;
 }
 
@@ -125,19 +131,6 @@ button {
   color: inherit;
 }
 
-.scanlines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.015) 0px,
-    rgba(255, 255, 255, 0.015) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-}
-
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -145,4 +138,26 @@ button {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/*
+ * Filet de sécurité global pour prefers-reduced-motion (roadmap p2-i7).
+ * useReducedMotion.ts + les hooks qui s'y branchent (Lenis)
+ * coupent déjà le motion piloté par JS à la source. Ce bloc couvre l'autre
+ * moitié : les transitions/animations purement CSS (survol des cartes
+ * projets, boutons, toggles, etc.) qui n'ont pas de logique JS à désactiver.
+ * Ne s'applique pas aux animations Framer Motion (elles animent via des
+ * styles inline en JS, hors de portée de CSS) — c'est pour ça que le hook
+ * ci-dessus reste nécessaire en parallèle plutôt que de compter uniquement
+ * sur ce media query.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

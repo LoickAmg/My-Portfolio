@@ -1,11 +1,13 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useT } from "@/lib/i18n";
+import { STORAGE_KEYS } from "@/lib/storage";
 import styles from "./ThemeToggle.module.css";
 
 type Theme = "light" | "dark";
 
-const STORAGE_KEY = "portfolio-theme";
+const STORAGE_KEY = STORAGE_KEYS.theme;
 const THEME_EVENT = "portfolio-theme-change";
 
 function readTheme(): Theme {
@@ -31,6 +33,7 @@ function getServerSnapshot(): Theme | null {
 // si le viewport change de palier après montage.
 export default function ThemeToggle({ className }: { className?: string }) {
   const theme = useSyncExternalStore(subscribe, readTheme, getServerSnapshot);
+  const { t } = useT();
 
   function toggle() {
     const next: Theme = readTheme() === "light" ? "dark" : "light";
@@ -51,10 +54,10 @@ export default function ThemeToggle({ className }: { className?: string }) {
       onClick={toggle}
       aria-label={
         theme === null
-          ? "Changer de thème"
+          ? t.themeToggle.unknown
           : theme === "light"
-            ? "Passer en mode sombre"
-            : "Passer en mode clair"
+            ? t.themeToggle.toDark
+            : t.themeToggle.toLight
       }
     >
       {theme === "light" && (

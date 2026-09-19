@@ -6,58 +6,58 @@ const projects = projectsData as Project[];
 // Catégorisation manuelle des technologies rencontrées dans src/data/projects.json.
 // Dérivé des projets réellement livrés — pas une liste de compétences déclarée
 // à part, pour rester honnête et vérifiable (voir cadrage §5.2).
+//
+// Regroupement par domaine d'ingénierie (Core / Backend / Data-ML / Systems)
+// plutôt que par nature d'artefact (langage vs framework vs infra) — voir
+// roadmap phase 01, p1-i4 : la catégorie doit se lire comme une compétence,
+// pas comme un compteur d'usage.
 const CATEGORY_MAP: Record<string, string> = {
-  Rust: "Langages",
-  Python: "Langages",
-  TypeScript: "Langages",
-  JavaScript: "Langages",
-  HTML: "Langages",
+  Rust: "Core",
+  Python: "Core",
+  TypeScript: "Core",
+  JavaScript: "Core",
+  HTML: "Core",
 
-  Axum: "Frameworks & bibliothèques",
-  "Next.js": "Frameworks & bibliothèques",
-  "Express": "Frameworks & bibliothèques",
-  Django: "Frameworks & bibliothèques",
-  DRF: "Frameworks & bibliothèques",
-  Vue: "Frameworks & bibliothèques",
-  Tauri: "Frameworks & bibliothèques",
-  FastAPI: "Frameworks & bibliothèques",
-  Astro: "Frameworks & bibliothèques",
-  "Three.js": "Frameworks & bibliothèques",
-  Prisma: "Frameworks & bibliothèques",
-  Canvas: "Frameworks & bibliothèques",
-  Pygame: "Frameworks & bibliothèques",
-  Leaflet: "Frameworks & bibliothèques",
+  Axum: "Backend",
+  "Next.js": "Backend",
+  "Express": "Backend",
+  Django: "Backend",
+  DRF: "Backend",
+  Vue: "Backend",
+  Tauri: "Backend",
+  FastAPI: "Backend",
+  Astro: "Backend",
+  "Three.js": "Backend",
+  Prisma: "Backend",
+  Canvas: "Backend",
+  Pygame: "Backend",
+  Leaflet: "Backend",
+  "Node.js": "Backend",
 
-  NumPy: "Données & ML",
-  PyTorch: "Données & ML",
-  "Scikit-learn": "Données & ML",
-  MLflow: "Données & ML",
-  MediaPipe: "Données & ML",
-  OpenCV: "Données & ML",
-  Matplotlib: "Données & ML",
-  SciPy: "Données & ML",
-  LlamaIndex: "Données & ML",
+  NumPy: "Data/ML",
+  PyTorch: "Data/ML",
+  "Scikit-learn": "Data/ML",
+  MLflow: "Data/ML",
+  MediaPipe: "Data/ML",
+  OpenCV: "Data/ML",
+  Matplotlib: "Data/ML",
+  SciPy: "Data/ML",
+  LlamaIndex: "Data/ML",
 
-  Postgres: "Infrastructure & outils",
-  SQLite: "Infrastructure & outils",
-  WebSocket: "Infrastructure & outils",
-  Tokio: "Infrastructure & outils",
-  FUSE: "Infrastructure & outils",
-  Prometheus: "Infrastructure & outils",
-  Grafana: "Infrastructure & outils",
-  asyncio: "Infrastructure & outils",
-  httpx: "Infrastructure & outils",
-  socket: "Infrastructure & outils",
-  BeautifulSoup: "Infrastructure & outils",
-  "Node.js": "Infrastructure & outils",
+  Postgres: "Systems",
+  SQLite: "Systems",
+  WebSocket: "Systems",
+  Tokio: "Systems",
+  FUSE: "Systems",
+  Prometheus: "Systems",
+  Grafana: "Systems",
+  asyncio: "Systems",
+  httpx: "Systems",
+  socket: "Systems",
+  BeautifulSoup: "Systems",
 };
 
-export const CATEGORY_ORDER = [
-  "Langages",
-  "Frameworks & bibliothèques",
-  "Données & ML",
-  "Infrastructure & outils",
-];
+export const CATEGORY_ORDER = ["Core", "Backend", "Data/ML", "Systems"];
 
 export interface SkillEntry {
   name: string;
@@ -75,7 +75,7 @@ export function computeSkills(): Record<string, SkillEntry[]> {
   for (const cat of CATEGORY_ORDER) byCategory[cat] = [];
 
   counts.forEach((count, name) => {
-    const category = CATEGORY_MAP[name] ?? "Infrastructure & outils";
+    const category = CATEGORY_MAP[name] ?? "Systems";
     if (!byCategory[category]) byCategory[category] = [];
     byCategory[category].push({ name, category, count });
   });

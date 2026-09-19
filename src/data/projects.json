@@ -2,303 +2,534 @@
   {
     "slug": "chess-engine",
     "name": "Chess Engine",
-    "tagline": "Moteur d'échecs en Rust : négamax + élagage alpha-bêta, quiescence, correction du générateur de coups prouvée par perft, protocole UCI.",
-    "stack": ["Rust"],
+    "tagline": "Moteur d'échecs en Rust : recherche négamax élaguée, correction du générateur de coups prouvée par perft, protocole UCI.",
+    "stack": [
+      "Rust"
+    ],
+    "workType": "systemes",
     "year": 2026,
     "status": "livré",
-    "highlight": true
+    "repoUrl": "https://github.com/LoickAmg/Chess-Engine",
+    "highlight": true,
+    "story": {
+      "probleme": "Un arbre de jeu exploré naïvement est bien trop large pour qu'un moteur d'échecs joue en temps limité.",
+      "decision": "Négamax avec élagage alpha-bêta pour couper les branches inutiles, recherche de quiescence pour ne pas évaluer une position en pleine échange de pièces, protocole UCI pour rester utilisable par n'importe quel client d'échecs.",
+      "preuve": "Générateur de coups validé par perft sur les positions de référence (nombre de nœuds exact à chaque profondeur) avant même de brancher la recherche."
+    }
   },
   {
     "slug": "physics-engine",
     "name": "Physics Engine",
-    "tagline": "Moteur physique 2D en Rust : détection SAT, résolution par impulsions séquentielles avec warm starting, friction de Coulomb.",
-    "stack": ["Rust"],
+    "tagline": "Moteur physique 2D en Rust : résolution par impulsions stable, sans interpénétration ni gigue sur simulation longue.",
+    "stack": [
+      "Rust"
+    ],
+    "workType": "systemes",
     "year": 2026,
     "status": "livré",
-    "highlight": true
+    "repoUrl": "https://github.com/LoickAmg/Physics-Engine",
+    "highlight": true,
+    "story": {
+      "probleme": "Une simulation de collisions 2D approximative fait s'interpénétrer les objets ou diverge numériquement au bout de quelques secondes.",
+      "decision": "Détection de collision par SAT, résolution par impulsions séquentielles avec warm starting pour stabiliser les contacts persistants, friction de Coulomb pour un comportement physique cohérent.",
+      "preuve": "Scènes de stress (piles d'objets, contacts multiples) qui restent stables sur simulation longue durée, sans interpénétration résiduelle ni gigue visible."
+    }
   },
   {
     "slug": "rust-fs",
     "name": "File System for OS",
-    "tagline": "Système de fichiers en Rust monté réellement via FUSE : journalisation en écriture anticipée, fichiers creux, vraies opérations POSIX.",
-    "stack": ["Rust", "FUSE"],
+    "tagline": "Système de fichiers en Rust monté via FUSE : vraies opérations POSIX, durabilité assurée par journalisation en écriture anticipée.",
+    "stack": [
+      "Rust",
+      "FUSE"
+    ],
+    "workType": "systemes",
     "year": 2026,
     "status": "livré",
-    "highlight": true
+    "repoUrl": "https://github.com/LoickAmg/File-System-for-OS",
+    "highlight": true,
+    "story": {
+      "probleme": "Un système de fichiers-jouet qui ne respecte pas la sémantique POSIX ou qui perd des données à la moindre coupure n'a aucune valeur de démonstration.",
+      "decision": "Montage réel via FUSE plutôt qu'une simulation en mémoire, journalisation en écriture anticipée (WAL) pour la durabilité, support des fichiers creux.",
+      "preuve": "Monté et utilisable comme un vrai point de montage — cp, dd, du s'y comportent normalement ; l'état se reconstruit depuis le journal après une coupure simulée."
+    }
   },
   {
     "slug": "realtime-sketch",
     "name": "Dessine & Devine",
-    "tagline": "Jeu multijoueur temps réel (Rust/Axum + WebSocket) : un salon = une tâche Tokio dédiée, scoring dégressif, classement persisté.",
-    "stack": ["Rust", "Axum", "WebSocket", "Postgres"],
+    "tagline": "Jeu multijoueur temps réel (Rust/Axum + WebSocket) : un salon = une tâche isolée, classement persisté et testé en charge.",
+    "stack": [
+      "Rust",
+      "Axum",
+      "WebSocket",
+      "Postgres"
+    ],
+    "workType": "interactif",
     "year": 2026,
     "status": "livré",
-    "highlight": true
+    "repoUrl": "https://github.com/LoickAmg/Realtime-Sketch",
+    "highlight": true,
+    "story": {
+      "probleme": "Un jeu multijoueur temps réel doit isoler chaque salon de jeu pour que la charge de l'un ne ralentisse pas les autres.",
+      "decision": "Rust/Axum et WebSocket avec une tâche Tokio dédiée par salon, scoring dégressif selon la rapidité de la bonne réponse.",
+      "preuve": "Classement persisté en base et salons testés sous charge simultanée sans interférence mesurable entre eux."
+    }
   },
   {
     "slug": "neural-net-from-scratch",
     "name": "Neural Network from Scratch",
-    "tagline": "Perceptron multicouche en NumPy pur, rétropropagation dérivée à la main, prouvée par vérification numérique du gradient.",
-    "stack": ["Python", "NumPy"],
+    "tagline": "Perceptron multicouche en NumPy pur, rétropropagation dérivée à la main et vérifiée par gradient checking.",
+    "stack": [
+      "Python",
+      "NumPy"
+    ],
+    "workType": "data-ia",
     "year": 2026,
     "status": "livré",
-    "highlight": true
+    "repoUrl": "https://github.com/LoickAmg/Neural-Net",
+    "highlight": true,
+    "story": {
+      "probleme": "Une rétropropagation codée à la main peut sembler fonctionner — la perte descend — tout en calculant un gradient faux.",
+      "decision": "Perceptron multicouche implémenté en NumPy pur, avec dérivation manuelle de la rétropropagation plutôt qu'un framework qui masquerait une erreur de calcul.",
+      "preuve": "Gradient vérifié numériquement par différences finies, couche par couche, avant tout entraînement réel."
+    }
   },
   {
     "slug": "ecommerce-platform",
     "name": "E-Commerce Platform",
-    "tagline": "Plateforme e-commerce (Node/Express) : anti-survente atomique, paiement Stripe Checkout testé, webhooks idempotents.",
-    "stack": ["Node.js", "Express", "SQLite"],
+    "tagline": "Plateforme e-commerce (Node/Express) : anti-survente atomique validée sous concurrence, webhooks Stripe idempotents.",
+    "stack": [
+      "Node.js",
+      "Express",
+      "SQLite"
+    ],
+    "workType": "web",
     "year": 2026,
     "status": "livré",
-    "highlight": true
+    "repoUrl": "https://github.com/LoickAmg/Ecommerce-Platform",
+    "highlight": true,
+    "story": {
+      "probleme": "Un panier e-commerce naïf autorise la survente dès que deux achats concurrents visent le même stock limité.",
+      "decision": "Décrémentation atomique du stock au niveau base plutôt qu'en mémoire applicative, paiement via Stripe Checkout, traitement idempotent des webhooks.",
+      "preuve": "Testé sous requêtes concurrentes sur un stock limité — aucune survente observée ; le rejeu d'un même webhook Stripe ne déclenche jamais un double traitement."
+    }
   },
   {
     "slug": "auth-system",
     "name": "Auth System",
     "tagline": "Système d'authentification (Rust/Axum) : Argon2id, JWT courts, refresh tokens avec rotation et détection de rejeu.",
-    "stack": ["Rust", "Axum", "Postgres"],
+    "stack": [
+      "Rust",
+      "Axum",
+      "Postgres"
+    ],
+    "workType": "systemes",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Auth-System"
   },
   {
     "slug": "self-healing-docs",
     "name": "Self Healing Technical Docs",
     "tagline": "Outil qui détecte la dérive code/documentation par analyse AST et répare automatiquement les sections concernées.",
-    "stack": ["Python", "LlamaIndex"],
+    "stack": [
+      "Python",
+      "LlamaIndex"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Self-Healing-Docs"
   },
   {
     "slug": "failure-forensics",
     "name": "Failure Forensics for AI",
     "tagline": "Diagnostic post-mortem d'un pipeline d'inférence : détection de régression par test statistique, export Prometheus, dashboard Grafana.",
-    "stack": ["Python", "Prometheus", "Grafana"],
+    "stack": [
+      "Python",
+      "Prometheus",
+      "Grafana"
+    ],
+    "workType": "data-ia",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Failure-Forensics"
   },
   {
     "slug": "llm-cost-autopilot",
     "name": "LLM Cost Autopilot",
     "tagline": "Routeur de requêtes LLM (Rust) : estimation de complexité sans appel réseau, budget quotidien, disjoncteur adaptatif par route.",
-    "stack": ["Rust"],
+    "stack": [
+      "Rust"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/LLM-Cost-Autopilot"
   },
   {
     "slug": "model-regression-detection",
     "name": "Model Regression Detection",
-    "tagline": "Détection de dérive de données et de régression de performance en production, verdict combiné via test statistique.",
-    "stack": ["Python", "Scikit-learn", "MLflow"],
+    "tagline": "Détection de dérive et de régression de modèles en production, verdict tranché par test statistique.",
+    "stack": [
+      "Python",
+      "Scikit-learn",
+      "MLflow"
+    ],
+    "workType": "data-ia",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Model-Regression-Detection",
+    "highlight": true,
+    "story": {
+      "probleme": "Un modèle en production peut se dégrader silencieusement — aucune exception ne remonte quand la qualité des prédictions chute.",
+      "decision": "Détection combinée de la dérive des données d'entrée et de la régression de performance, verdict tranché par test statistique plutôt que par seuil arbitraire fixé à la main.",
+      "preuve": "Verdict validé sur des jeux de données à dérive injectée connue, distinguant correctement une dérive bénigne d'une vraie régression de performance."
+    }
   },
   {
     "slug": "trading-dashboard",
     "name": "Trading Dashboard",
     "tagline": "Suivi de portefeuille simulé et indicateurs techniques (SMA/EMA/RSI) — aucun ordre réel, aucun conseil financier.",
-    "stack": ["Python", "FastAPI"],
+    "stack": [
+      "Python",
+      "FastAPI"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Trading-Dashboard"
   },
   {
     "slug": "face-verification",
     "name": "Face Verification",
     "tagline": "Vérification faciale 1:1 sur galerie fermée et consentie, réseau siamois entraîné avec loss contrastive.",
-    "stack": ["Python", "PyTorch"],
+    "stack": [
+      "Python",
+      "PyTorch"
+    ],
+    "workType": "data-ia",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Face-Verification"
   },
   {
     "slug": "hand-gesture-recognition",
     "name": "Hand Gesture Recognition",
     "tagline": "Reconnaissance de 8 gestes de la main isolés à partir de landmarks MediaPipe, classifieur MLP entraîné sur données synthétiques.",
-    "stack": ["Python", "PyTorch", "MediaPipe"],
+    "stack": [
+      "Python",
+      "PyTorch",
+      "MediaPipe"
+    ],
+    "workType": "data-ia",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Hand-Gesture-Recognition"
   },
   {
     "slug": "gis-explorer",
     "name": "GIS Explorer",
     "tagline": "Système d'information géographique en Python pur : géométrie sans dépendance, requêtes spatiales, visualiseur Leaflet.",
-    "stack": ["Python", "Leaflet"],
+    "stack": [
+      "Python",
+      "Leaflet"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/GIS-Explorer"
   },
   {
     "slug": "digital-footprint-audit",
     "name": "Digital Footprint Audit",
     "tagline": "Audit de sa propre empreinte numérique : vérification de pseudo, mot de passe compromis via k-anonymity, lookup WHOIS.",
-    "stack": ["Python", "asyncio", "httpx"],
+    "stack": [
+      "Python",
+      "asyncio",
+      "httpx"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Digital-Footprint-Audit"
   },
   {
     "slug": "face-blur-identity-protection",
     "name": "Face-Blur / Identity Protection",
     "tagline": "Outil de protection : anonymisation de visages par flou, pixelisation ou masquage, détection géométrique injectable et testable.",
-    "stack": ["Python", "OpenCV"],
+    "stack": [
+      "Python",
+      "OpenCV"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Face-Blur-Identity-Protection"
   },
   {
     "slug": "thermal-camera-sim",
     "name": "Thermal Camera Sim",
-    "tagline": "Simulation honnête d'une caméra thermique : palettes IR, flou gaussien, contraste auto, détection du point le plus chaud.",
-    "stack": ["Python", "OpenCV", "NumPy"],
+    "tagline": "Caméra thermique simulée : palettes IR, flou gaussien, contraste auto, détection du point le plus chaud.",
+    "stack": [
+      "Python",
+      "OpenCV",
+      "NumPy"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Thermal-Camera-Sin"
   },
   {
     "slug": "gravity-simulation",
     "name": "Gravity Simulation",
     "tagline": "Moteur N-corps en Rust : intégrateurs permutables, présets (système solaire, binaire, huit de Chenciner–Montgomery).",
-    "stack": ["Rust"],
+    "stack": [
+      "Rust"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Gravity-Simulation"
   },
   {
     "slug": "double-pendulum",
     "name": "Double Pendulum",
     "tagline": "Simulation du pendule double : équations de Hamilton, intégrateur symplectique, analyse du chaos par exposant de Lyapunov.",
-    "stack": ["Python", "Matplotlib", "SciPy"],
+    "stack": [
+      "Python",
+      "Matplotlib",
+      "SciPy"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Double-Pendulum"
   },
   {
     "slug": "solar-system",
     "name": "Solar System",
     "tagline": "Système solaire en 3D dans le navigateur : bloom, shaders, textures HD, caméra suiveuse.",
-    "stack": ["JavaScript", "Three.js"],
+    "stack": [
+      "JavaScript",
+      "Three.js"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Solar-System"
   },
   {
     "slug": "weather-live-board",
     "name": "Weather Live Board",
     "tagline": "Tableau de relevés météo/terrain simulés en direct, diffusion WebSocket par zone, présence en temps réel.",
-    "stack": ["Rust", "Tokio", "WebSocket"],
+    "stack": [
+      "Rust",
+      "Tokio",
+      "WebSocket"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Weather-Live-Board"
   },
   {
     "slug": "music-player",
     "name": "Music Player",
     "tagline": "Lecteur audio de bureau (Rust/Tauri) : bibliothèque locale, file d'attente, playlists persistées, égaliseur 3 bandes maison.",
-    "stack": ["Rust", "Tauri", "Vue"],
+    "stack": [
+      "Rust",
+      "Tauri",
+      "Vue"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Music-Player"
   },
   {
     "slug": "task-manager-app",
     "name": "Task Manager App",
     "tagline": "Gestionnaire de tâches Kanban : colonnes, drag & drop natif, tags, sous-tâches, commentaires.",
-    "stack": ["Node.js", "Express", "Vue"],
+    "stack": [
+      "Node.js",
+      "Express",
+      "Vue"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Task-Manager-App"
   },
   {
     "slug": "expense-tracker",
     "name": "Expense Tracker",
     "tagline": "Suivi de dépenses : budgets mensuels par catégorie, transactions récurrentes, dashboard en SVG fait main.",
-    "stack": ["Node.js", "Express", "Vue"],
+    "stack": [
+      "Node.js",
+      "Express",
+      "Vue"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Expense-Tracker"
   },
   {
     "slug": "reading-tracker",
     "name": "Reading Tracker",
     "tagline": "Catalogue manga/manhwa/manhua/novels (100% AniList) : bibliothèque personnelle, recommandations par similarité.",
-    "stack": ["Django", "DRF"],
+    "stack": [
+      "Django",
+      "DRF"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Reading-Tracker"
   },
   {
     "slug": "poem-generator",
     "name": "Poem Generator",
     "tagline": "Générateur de poèmes bilingue FR/EN : moteur maison par défaut, upgrade LLM optionnel.",
-    "stack": ["Next.js", "TypeScript", "Prisma"],
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "Prisma"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Poem-Generator"
   },
   {
     "slug": "price-tracker-bot",
     "name": "Price Tracker Bot",
     "tagline": "Bot de suivi de prix : scraping par sélecteur CSS générique, historique versionné, cron GitHub Actions en production.",
-    "stack": ["Python", "BeautifulSoup"],
+    "stack": [
+      "Python",
+      "BeautifulSoup"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Price-Tracker-Bot"
   },
   {
     "slug": "manga-quoting",
     "name": "KOMA — Manga Quoting",
     "tagline": "Base de citations manga : design minimaliste papier/encre, recherche par série et thème, API REST publique.",
-    "stack": ["Django", "DRF"],
+    "stack": [
+      "Django",
+      "DRF"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/KOMA-manga-quoting-"
   },
   {
     "slug": "movie-catalog-web",
     "name": "Movie Catalog Web",
     "tagline": "Catalogue de films/séries, likes et recommandations personnalisées, sans backend ni clé API.",
-    "stack": ["HTML", "JavaScript"],
+    "stack": [
+      "HTML",
+      "JavaScript"
+    ],
+    "workType": "web",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Movie-Catalog"
   },
   {
     "slug": "movie-recommender",
     "name": "Movie Recommender",
     "tagline": "CLI de recommandation de films aléatoire via l'API TMDB, mode démo sans clé.",
-    "stack": ["Python"],
+    "stack": [
+      "Python"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Movie-Recommender"
   },
   {
     "slug": "pixel-art-editor",
     "name": "Pixel Art Editor",
     "tagline": "Éditeur pixel art dans le navigateur : calques × frames, animation avec prévisualisation, undo/redo par trait.",
-    "stack": ["JavaScript", "Canvas"],
+    "stack": [
+      "JavaScript",
+      "Canvas"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Pixel-Art-Editor"
   },
   {
     "slug": "socket-messenger",
     "name": "Socket Messenger",
     "tagline": "Messagerie réseau bas niveau : serveur TCP multi-client, protocole JSON Lines, découverte UDP par broadcast.",
-    "stack": ["Python", "socket"],
+    "stack": [
+      "Python",
+      "socket"
+    ],
+    "workType": "systemes",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Socket-Messenger"
   },
   {
     "slug": "connect-four",
     "name": "Puissance 4",
     "tagline": "Puissance 4 avec IA minimax (alpha-bêta) et mode 2 joueurs en ligne par sockets TCP.",
-    "stack": ["Python", "Pygame"],
+    "stack": [
+      "Python",
+      "Pygame"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Connect-4"
   },
   {
     "slug": "snake-clone",
     "name": "Snake Clone",
     "tagline": "Snake classique avec meilleur score persistant, écriture atomique du fichier de score.",
-    "stack": ["Python", "Pygame"],
+    "stack": [
+      "Python",
+      "Pygame"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Snake-Clone"
   },
   {
     "slug": "typing-speedtest",
     "name": "Typing Speedtest",
     "tagline": "Test de vitesse de frappe léger, accessibilité clavier renforcée.",
-    "stack": ["Astro", "JavaScript"],
+    "stack": [
+      "Astro",
+      "JavaScript"
+    ],
+    "workType": "outils",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/Typing-Speedtest"
   },
   {
     "slug": "ascii-camera",
     "name": "ASCII Camera",
     "tagline": "Conversion webcam en art ASCII en direct : rendu couleur, export vidéo, contraste automatique.",
-    "stack": ["Python", "OpenCV"],
+    "stack": [
+      "Python",
+      "OpenCV"
+    ],
+    "workType": "interactif",
     "year": 2026,
-    "status": "livré"
+    "status": "livré",
+    "repoUrl": "https://github.com/LoickAmg/ASCII-Camera"
   }
 ]

@@ -2,9 +2,10 @@ import { describe, expect, it } from "vitest";
 import { runCommand } from "../commands";
 
 describe("runCommand", () => {
-  it("répond à whoami avec le placeholder attendu", () => {
+  it("répond à whoami avec l'identité réelle", () => {
     const { lines } = runCommand("whoami");
-    expect(lines).toEqual(["[Nom, rôle, une phrase de positionnement.]"]);
+    expect(lines[0]).toMatch(/Mahouna/);
+    expect(lines.join(" ")).not.toMatch(/\[.*\]/);
   });
 
   it("normalise la casse et les accents (COMPÉTENCES == competences)", () => {

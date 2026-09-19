@@ -1,0 +1,215 @@
+.overlay {
+  --card-w: clamp(150px, 15vw, 210px);
+  --cut: 26px;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--bg-void);
+  animation: appear 0.16s ease-out;
+}
+
+.bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 40px 0;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.05;
+}
+
+.close {
+  flex: none;
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid var(--ink-25);
+  color: var(--ink-70);
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.close:hover,
+.close:focus-visible {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 56px 24px 32px;
+}
+
+.hand {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot {
+  position: relative;
+  margin-left: calc(var(--card-w) * -0.3);
+}
+
+.slot:first-child {
+  margin-left: 0;
+}
+
+.slot:has(.card[data-active="true"]) {
+  z-index: 10;
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: var(--card-w);
+  aspect-ratio: 5 / 8;
+  padding: 0;
+  border: 0;
+  background: var(--ink-25);
+  color: var(--ink);
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transform-origin: 50% 170%;
+  transform: translateY(calc(var(--d) * var(--d) * 5px)) rotate(calc(var(--d) * 4.5deg));
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease,
+    background 0.15s ease;
+  animation: deal 0.2s ease-out backwards;
+  animation-delay: calc(var(--i) * 15ms);
+}
+
+.card[data-active="true"] {
+  background: var(--accent);
+  transform: translateY(-34px) rotate(0deg) scale(1.06);
+}
+
+.card[aria-current="true"] {
+  background: var(--accent);
+}
+
+/* La carte choisie s'avance, les autres s'effacent : confirme le choix. */
+.hand[data-picking="true"] .card {
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 0.24s;
+}
+
+.hand[data-picking="true"] .card[data-picked="true"] {
+  opacity: 1;
+  background: var(--accent);
+  transform: translateY(-6vh) rotate(0deg) scale(1.3);
+  z-index: 20;
+}
+
+.hint {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-55);
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: translateY(70px) rotate(0deg);
+  }
+}
+
+/* Mobile et petites tablettes : la main devient une grille de cartes. */
+@media (max-width: 899px) {
+  .overlay {
+    --card-w: 100%;
+    --cut: 20px;
+  }
+
+  .bar {
+    padding: 18px 18px 0;
+  }
+
+  .table {
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 28px 18px 32px;
+  }
+
+  .hand {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+    max-width: 460px;
+  }
+
+  .slot,
+  .slot:first-child {
+    margin-left: 0;
+  }
+
+  .slot:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 7px);
+  }
+
+  .card,
+  .card[data-active="true"] {
+    transform: none;
+  }
+
+  .card:active {
+    transform: scale(0.97);
+  }
+
+  .hand[data-picking="true"] .card[data-picked="true"] {
+    transform: scale(1.06);
+  }
+
+  .hint {
+    display: none;
+  }
+}

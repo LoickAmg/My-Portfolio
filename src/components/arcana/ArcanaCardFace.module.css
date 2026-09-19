@@ -1,0 +1,87 @@
+.frame {
+  --cut: 26px;
+
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 8;
+  background: var(--accent);
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+}
+
+.face {
+  position: absolute;
+  inset: 2px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 12px 0;
+  background: var(--bg-panel);
+  clip-path: polygon(0 0, calc(100% - var(--cut) + 2px) 0, 100% calc(var(--cut) - 2px), 100% 100%, calc(var(--cut) - 2px) 100%, 0 calc(100% - var(--cut) + 2px));
+}
+
+.numeral {
+  font-family: var(--font-display);
+  font-size: var(--numeral-size, 34px);
+  line-height: 1;
+  color: var(--accent-text);
+}
+
+.art {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  margin: 10px 0;
+  padding: 10px;
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--ink-12);
+  color: var(--ink);
+}
+
+.art svg {
+  width: 100%;
+  max-width: var(--art-max, 116px);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.nameplate {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 0 -12px;
+  padding: 16px 12px 14px;
+  background: var(--bg-tag);
+  clip-path: polygon(0 12px, 100% 0, 100% 100%, 0 100%);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.highlighted .nameplate {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.name {
+  font-size: var(--name-size, 14px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+
+.section {
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+@media (max-width: 899px) {
+  .numeral {
+    font-size: var(--numeral-size-mobile, 30px);
+  }
+}

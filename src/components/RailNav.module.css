@@ -38,6 +38,35 @@
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 
+.cardsBtn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--ink-25);
+  color: var(--ink-70);
+  cursor: pointer;
+  clip-path: polygon(0 0, 78% 0, 100% 22%, 100% 100%, 22% 100%, 0 78%);
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.cardsBtn:hover,
+.cardsBtn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.cardsBtn:hover .tooltip,
+.cardsBtn:focus-visible .tooltip {
+  opacity: 1;
+}
+
 .dots {
   display: flex;
   flex-direction: column;
@@ -76,7 +105,7 @@
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -98,13 +127,17 @@
   margin-top: 4px;
 }
 
+.railLanguageToggle {
+  margin-top: 8px;
+}
+
 .vertical {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 10px;
   letter-spacing: 0.16em;
-  color: var(--ink-40);
+  color: var(--ink-55);
 }
 
 @media (max-width: 899px) {
@@ -153,7 +186,7 @@
 }
 
 .mobileLabel {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -169,61 +202,27 @@
   /* Sélecteur dédié (hérite du style de base .toggle) */
 }
 
-.menuBtn {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  padding: 8px;
+.mobileLanguageToggle {
+  /* Sélecteur dédié (hérite du style de base .toggle) */
 }
 
-.menuBtn span {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--ink);
-}
-
-.menuPanel {
-  position: fixed;
-  inset: 57px 0 0 0;
-  z-index: 45;
-  background: var(--bg-void);
-  padding: 8px 18px 24px;
+.mobileMenuBtn {
   display: flex;
-  flex-direction: column;
-}
-
-.menuItem {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  padding: 16px 4px;
-  border-bottom: 1px solid var(--ink-12);
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  background: none;
-  cursor: pointer;
-  text-align: left;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid var(--ink-25);
   color: var(--ink);
-}
-
-.menuItem[aria-current="true"] {
-  color: var(--accent-text);
-}
-
-.menuIndex {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink-40);
-}
-
-.menuLabel {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 20px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  cursor: pointer;
+}
+
+.mobileMenuBtn:hover,
+.mobileMenuBtn:focus-visible {
+  border-color: var(--accent);
 }

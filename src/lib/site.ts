@@ -9,10 +9,16 @@ import projectsData from "@/data/projects.json";
 export const SITE_NAME = "Mahouna — Portfolio";
 export const OWNER_NAME = "Mahouna";
 
-// Domaine de production. Sans NEXT_PUBLIC_SITE_URL, sitemap.xml, robots.txt et
-// les images de partage pointent vers localhost : à définir avant tout
-// déploiement.
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// Domaine du site, dans cet ordre : NEXT_PUBLIC_SITE_URL (domaine
+// personnalisé), puis le domaine de production que Vercel fournit lui-même au
+// build, puis localhost en développement. Il sert au sitemap, à robots.txt et
+// aux images de partage, qui exigent une adresse absolue.
+const vercelProductionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+
+// `||` et non `??` : une variable définie mais vide (fréquent dans un tableau
+// de bord d'hébergeur) est traitée comme absente, sinon new URL("") planterait.
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || (vercelProductionHost ? `https://${vercelProductionHost}` : "http://localhost:3000");
 
 // Le nombre de projets vient du catalogue : la description ne se périme pas.
 export const SITE_DESCRIPTION = `Ingénieur IA et architecture logicielle. ${projectsData.length} projets livrés et publiés sur GitHub, surtout en Python et en Rust, et la méthode qui les relie.`;

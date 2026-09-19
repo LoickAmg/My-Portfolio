@@ -3,20 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "fonts": "node scripts/fetch-fonts.mjs",
+    "predev": "node scripts/fetch-fonts.mjs --if-missing",
     "dev": "next dev",
+    "prebuild": "node scripts/fetch-fonts.mjs --if-missing",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run"
   },
   "dependencies": {
-    "@fontsource/anton": "^5.3.0",
-    "@fontsource/jetbrains-mono": "^5.3.0",
-    "@fontsource/sora": "^5.3.0",
-    "framer-motion": "^13.2.0",
+    "@types/three": "^0.186.0",
+    "lenis": "^1.3.26",
     "next": "16.3.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^7.0.1",

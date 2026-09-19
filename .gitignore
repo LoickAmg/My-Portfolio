@@ -39,5 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-AGENTS.md
-CLAUDE.md
+
+# fichiers de travail locaux
+/_to_delete/
+/next-dev.log
+/run-dev.sh
+/portfolio-src-snapshot.tar.gz
+
+# polices Satoshi et Stardom (licence ITF FFL : redistribution interdite)
+# récupérées par scripts/fetch-fonts.mjs
+/src/app/fonts/

@@ -1,42 +1,43 @@
-.grid {
-  display: flex;
+.hero {
+  --pt: 72px;
+  --pb: 88px;
+
+  min-height: 100svh;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
   align-items: center;
-  gap: 64px;
+  gap: 48px;
 }
 
 .copy {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 28px;
-  max-width: 640px;
 }
 
 .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
+  margin: 0;
+  font-family: var(--font-label);
   font-size: 12px;
+  font-weight: 600;
   letter-spacing: 0.14em;
-  color: var(--ink-55);
   text-transform: uppercase;
-}
-
-.eyebrowLine {
-  width: 20px;
-  height: 1px;
-  background: var(--ink-40);
+  color: var(--ink-55);
 }
 
 .heading {
   margin: 0;
+  max-width: 11em;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(40px, 6vw, 76px);
-  line-height: 0.98;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  font-size: clamp(42px, 5.8vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 .headingAccent {
@@ -45,88 +46,130 @@
 
 .intro {
   margin: 0;
-  max-width: 480px;
+  max-width: 46ch;
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-70);
 }
 
 .ctas {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 28px;
   flex-wrap: wrap;
 }
 
-.ctaPrimary {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 26px;
+.cta {
+  padding: 16px 30px;
   background: var(--accent);
-  color: var(--accent-ink);
   border: none;
+  color: var(--accent-ink);
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   cursor: pointer;
   clip-path: polygon(0 0, 92% 0, 100% 30%, 100% 100%, 8% 100%, 0 70%);
+  transition: background 0.15s ease;
 }
 
-.ctaSecondary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 4px;
+.cta:hover,
+.cta:focus-visible {
+  background: var(--accent-text);
+}
+
+.link {
+  padding: 14px 0;
   background: transparent;
   border: none;
+  border-bottom: 2px solid var(--ink-25);
   color: var(--ink);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
+  transition: border-color 0.15s ease;
 }
 
-.stats {
-  display: flex;
-  gap: 36px;
-  flex-wrap: wrap;
-  margin-top: 4px;
-  padding-top: 20px;
-  border-top: 1px solid var(--ink-12);
+.link:hover,
+.link:focus-visible {
+  border-bottom-color: var(--accent);
 }
 
-.stat {
+.facts {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.statIndex {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-40);
-}
-
-.statLabel {
-  font-size: 13px;
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+  margin: 8px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--ink-12);
+  list-style: none;
+  font-size: 14px;
   font-weight: 600;
 }
 
-.dialogueWrap {
-  flex: 0 0 460px;
-  max-width: 460px;
+.facts li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.facts li::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* La carte est posée au-dessus de la boîte de dialogue, qui ne mord que sur
+   son bord inférieur : le nom et l'illustration restent entièrement lisibles. */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: min(232px, 52%);
+  margin-right: 12px;
+  transform: rotate(3deg);
+}
+
+.dialogue {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 480px;
+  margin-top: -8px;
 }
 
 @media (max-width: 1099px) {
-  .grid {
-    flex-direction: column;
-    align-items: stretch;
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
-  .dialogueWrap {
-    flex: 1 1 auto;
-    max-width: 520px;
+  .stage {
+    align-items: flex-start;
+  }
+
+  .card {
+    width: 200px;
+    margin: 0 0 0 auto;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    --pt: 56px;
+    --pb: 64px;
+
+    min-height: 0;
   }
 }

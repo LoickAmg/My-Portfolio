@@ -1,168 +1,98 @@
 "use client";
 
-import { motion } from "framer-motion";
+import type { CSSProperties } from "react";
+import projectsData from "@/data/projects.json";
+import { arcanaFor } from "@/lib/arcana";
 import { SECTIONS } from "@/lib/sections";
 import { scrollToSection } from "@/lib/scroll";
+import { useT, sectionLabel } from "@/lib/i18n";
+import type { Project } from "@/lib/types";
 import DialogueBox from "@/components/DialogueBox";
-import SectionHeader from "./SectionHeader";
+import ArcanaCardFace, { ArcanaCardFrame } from "@/components/arcana/ArcanaCardFace";
+import SceneHeader from "./SceneHeader";
 import sectionStyles from "./sections.module.css";
 import styles from "./Hero.module.css";
 
-const section = SECTIONS[0]; // index
+const section = SECTIONS[0];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: 0.1 + i * 0.08, ease: "easeOut" as const },
-  }),
-};
+// Les chiffres affichés sont calculés à partir du catalogue, jamais écrits en
+// dur : ils suivent le contenu de src/data/projects.json.
+const projects = projectsData as Project[];
+const DELIVERED_COUNT = projects.filter((project) => project.status === "livré").length;
+const countUsing = (tech: string) => projects.filter((project) => project.stack.includes(tech)).length;
+const PYTHON_COUNT = countUsing("Python");
+const RUST_COUNT = countUsing("Rust");
+
+const CARD_SIZES = {
+  "--numeral-size": "56px",
+  "--numeral-size-mobile": "44px",
+  "--art-max": "190px",
+  "--name-size": "17px",
+} as CSSProperties;
 
 export default function Hero() {
+  const { lang, t } = useT();
+  const copy = t.hero;
+  const arcana = arcanaFor(section.id);
+
   return (
-    <section id={section.id} className={sectionStyles.section}>
-      <SectionHeader index={section.index} label={section.label} />
+    <section id={section.id} className={`${sectionStyles.scene} ${styles.hero}`}>
+      <SceneHeader sectionId={section.id} />
 
-      <div className={styles.grid}>
+      <div className={styles.layout}>
         <div className={styles.copy}>
-          <motion.div
-            className={styles.eyebrow}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={0}
-          >
-            <span className={styles.eyebrowLine} />
-            [ rôle / positionnement ]
-          </motion.div>
+          <p className={styles.eyebrow}>{copy.eyebrow}</p>
 
-          <motion.h1
-            className={styles.heading}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={1}
-          >
-            Je construis
-            <br />
-            des systèmes
-            <br />
-            <span className={styles.headingAccent}>qui tiennent.</span>
-          </motion.h1>
+          <h1 className={styles.heading}>
+            {copy.headingLine1} {copy.headingLine2}{" "}
+            <span className={styles.headingAccent}>{copy.headingAccent(DELIVERED_COUNT)}</span>
+          </h1>
 
-          <motion.p
-            className={styles.intro}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={2}
-          >
-            [Une phrase d&apos;intro à écrire ensemble — qui tu es, ce que tu
-            construis, pour qui.]
-          </motion.p>
+          <p className={styles.intro}>{copy.intro}</p>
 
-          <motion.div
-            className={styles.ctas}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={3}
-          >
-            <button
-              type="button"
-              className={styles.ctaPrimary}
-              onClick={() => scrollToSection("projets")}
-            >
-              Explorer les projets
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M7 7h10v10" />
-                <path d="M7 17 17 7" />
-              </svg>
+          <div className={styles.ctas}>
+            <button type="button" className={styles.cta} onClick={() => scrollToSection("projets")}>
+              {copy.ctaPrimary}
             </button>
-            <button
-              type="button"
-              className={styles.ctaSecondary}
-              onClick={() => scrollToSection("signal")}
-            >
-              Ouvrir le canal
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
+            <button type="button" className={styles.link} onClick={() => scrollToSection("contact")}>
+              {copy.ctaSecondary}
             </button>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className={styles.stats}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={4}
-          >
-            <div className={styles.stat}>
-              <span className={styles.statIndex}>01</span>
-              <strong className={styles.statLabel}>
-                [Localisation / dispo]
-              </strong>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statIndex}>02</span>
-              <strong className={styles.statLabel}>40 projets livrés</strong>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statIndex}>03</span>
-              <strong className={styles.statLabel}>
-                Scroll pour décoder ↓
-              </strong>
-            </div>
-          </motion.div>
+          <ul className={styles.facts}>
+            <li>{copy.facts.available}</li>
+            <li>{copy.facts.repositories}</li>
+            <li>{copy.facts.languages(PYTHON_COUNT, RUST_COUNT)}</li>
+          </ul>
         </div>
 
-        <motion.div
-          className={styles.dialogueWrap}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-        >
-          <DialogueBox
-            channelLabel="Canal actif"
-            channelIndex="01 / 03"
-            speakerInitial="M"
-            speakerTag="Mahouna // Signal 00"
-            line="[Texte d'accroche — à écrire ensemble : ce que ce portfolio raconte, en une ou deux phrases.]"
-            choices={[
-              {
-                key: "A",
-                label: "Montre-moi ta méthode.",
-                primary: true,
-                onSelect: () => scrollToSection("methode"),
-              },
-              {
-                key: "B",
-                label: "Je veux voir les projets.",
-                onSelect: () => scrollToSection("projets"),
-              },
-            ]}
-          />
-        </motion.div>
+        <div className={styles.stage}>
+          <div className={styles.card} style={CARD_SIZES}>
+            <ArcanaCardFrame>
+              <ArcanaCardFace
+                sectionId={section.id}
+                numeral={arcana?.numeral ?? ""}
+                name={t.arcana.names[section.id]}
+                sectionIndex={section.index}
+                sectionName={sectionLabel(section.id, lang)}
+                highlighted
+              />
+            </ArcanaCardFrame>
+          </div>
+
+          <div className={styles.dialogue}>
+            <DialogueBox
+              channelLabel={copy.dialogue.channelLabel}
+              speakerInitial="M"
+              speakerTag={copy.dialogue.speakerTag}
+              line={copy.dialogue.line}
+              choices={[
+                { key: "A", label: copy.dialogue.choiceA, primary: true, onSelect: () => scrollToSection("methode") },
+                { key: "B", label: copy.dialogue.choiceB, onSelect: () => scrollToSection("projets") },
+              ]}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,48 +1,132 @@
-.steps {
-  display: flex;
-  flex-direction: column;
-  max-width: 760px;
+.method {
+  --pt: 88px;
+  --pb: 144px;
 }
 
-.step {
-  display: flex;
-  gap: 24px;
-  padding: 26px 0;
-  border-bottom: 1px solid var(--ink-12);
+.title {
+  max-width: 18ch;
+  margin-bottom: 64px;
+  text-wrap: balance;
 }
 
-.step:first-child {
-  padding-top: 0;
+.rules {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.stepIndex {
-  flex: 0 0 auto;
+.rule {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1.15fr) minmax(240px, 0.85fr);
+  gap: 44px;
+  padding: 40px 0;
+  border-top: 1px solid var(--ink-25);
+}
+
+.rule:last-child {
+  border-bottom: 1px solid var(--ink-25);
+}
+
+.number {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 32px;
-  color: var(--accent-text);
+  font-size: 44px;
   line-height: 1;
-  min-width: 52px;
+  color: var(--accent-text);
 }
 
-.stepBody {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.stepTitle {
-  margin: 0;
-  font-family: var(--font-body);
+.tag {
+  display: block;
+  margin: 0 0 10px;
+  font-family: var(--font-label);
+  font-size: 11px;
   font-weight: 700;
-  font-size: 16px;
-  color: var(--ink);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-55);
 }
 
-.stepText {
+.claimTitle {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.claimText {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--ink-70);
-  max-width: 560px;
+}
+
+/* Face à la règle, sa preuve : deux plateaux séparés par un filet et un
+   losange, comme les deux côtés d'une balance. */
+.proof {
+  position: relative;
+  align-self: start;
+  padding-left: 32px;
+  border-left: 1px solid var(--ink-25);
+}
+
+.proof::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 2px;
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.proofLabel {
+  display: inline;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--accent-text);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.proof:hover .proofLabel,
+.proof:focus-visible .proofLabel {
+  border-bottom-color: currentColor;
+}
+
+@media (max-width: 1099px) {
+  .rule {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 20px 24px;
+  }
+
+  .proof {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 899px) {
+  .method {
+    --pt-mobile: 56px;
+    --pb-mobile: 88px;
+  }
+
+  .title {
+    margin-bottom: 40px;
+  }
+
+  .rule {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 28px 0;
+  }
+
+  .proof {
+    grid-column: 1;
+  }
+
+  .number {
+    font-size: 36px;
+  }
 }

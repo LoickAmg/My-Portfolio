@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Contact from "../Contact";
 
 vi.mock("@/lib/scroll", () => ({
@@ -16,11 +15,28 @@ describe("<Contact />", () => {
     expect(screen.getByText("LinkedIn")).toBeInTheDocument();
   });
 
-  it("affiche les valeurs des liens comme 'à confirmer'", () => {
+  it("affiche l'email et le GitHub comme de vrais liens cliquables", () => {
     render(<Contact />);
 
+    const email = screen.getByText("mahounaamg@gmail.com");
+    expect(email.closest("a")).toHaveAttribute(
+      "href",
+      "mailto:mahounaamg@gmail.com",
+    );
+
+    const github = screen.getByText("github.com/LoickAmg");
+    expect(github.closest("a")).toHaveAttribute(
+      "href",
+      "https://github.com/LoickAmg",
+    );
+  });
+
+  it("laisse LinkedIn marqué 'à confirmer' (profil pas encore à jour)", () => {
+    render(<Contact />);
+
+    // Le libellé "LinkedIn" et la valeur/pastille "à confirmer" à côté.
     const pending = screen.getAllByText("à confirmer");
-    expect(pending.length).toBeGreaterThanOrEqual(3);
+    expect(pending.length).toBeGreaterThanOrEqual(1);
   });
 
   it("affiche le bouton Signal", () => {
@@ -34,7 +50,7 @@ describe("<Contact />", () => {
 
     expect(screen.getByRole("heading", { name: "Contact" })).toBeInTheDocument();
     expect(
-      screen.getByText(/Phrase d'invitation au contact/i)
+      screen.getByText(/Écris-moi avec le contexte/i)
     ).toBeInTheDocument();
   });
 });

@@ -1,83 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { SECTIONS } from "@/lib/sections";
-import { computeSkills, CATEGORY_ORDER } from "@/lib/skills";
-import SectionHeader from "./SectionHeader";
+import { CATEGORY_ORDER, computeSkills } from "@/lib/skills";
+import { useT } from "@/lib/i18n";
+import SceneHeader from "./SceneHeader";
 import sectionStyles from "./sections.module.css";
 import styles from "./Skills.module.css";
 
-const section = SECTIONS[3]; // compétences
-
-const BLADE_POSITION = ["top", "right", "bottom", "left"] as const;
+const section = SECTIONS[3];
 
 // Compétences dérivées des technologies réellement utilisées dans les
-// projets livrés (src/data/projects.json) plutôt qu'une liste déclarée à
-// part — voir cadrage §5.2 : rien n'est affirmé qui ne soit vérifiable.
-//
-// Présentation en "menu radial" (4 catégories = 4 lames autour d'un hub
-// central, façon menu de combat) : cliquer une lame affiche les technologies
-// de cette catégorie dans le panneau ci-dessous.
+// projets livrés (src/data/projects.json), pas d'une liste déclarée à part :
+// chaque barre est le nombre de projets qui emploient la technologie.
+// Le domaine choisi à gauche filtre le classement à droite.
 export default function Skills() {
-  const byCategory = computeSkills();
-  const availableCategories = CATEGORY_ORDER.filter(
-    (cat) => (byCategory[cat] ?? []).length > 0,
-  );
-  const [active, setActive] = useState<string>(availableCategories[0] ?? "");
+  const { t } = useT();
+  const copy = t.skills;
+  const byCategory = useMemo(() => computeSkills(), []);
+  const categories = CATEGORY_ORDER.filter((category) => (byCategory[category] ?? []).length > 0);
+  const [active, setActive] = useState(categories[0] ?? "");
 
-  const totalCount = availableCategories.reduce(
-    (sum, cat) => sum + (byCategory[cat]?.length ?? 0),
-    0,
-  );
-  const activeEntries = byCategory[active] ?? [];
+  const total = categories.reduce((sum, category) => sum + byCategory[category].length, 0);
+  const highestCount = Math.max(1, ...categories.flatMap((category) => byCategory[category].map((entry) => entry.count)));
+  const entries = byCategory[active] ?? [];
 
   return (
-    <section id={section.id} className={sectionStyles.section}>
-      <SectionHeader index={section.index} label={section.label} />
-      <h2 className={sectionStyles.title}>Compétences</h2>
+    <section id={section.id} className={`${sectionStyles.scene} ${styles.skills}`}>
+      <SceneHeader sectionId={section.id} />
+      <h2 className={`${sectionStyles.title} ${styles.title}`}>{copy.headline(total)}</h2>
 
-      <div className={styles.radial}>
-        {availableCategories.map((cat, i) => {
-          const pos = BLADE_POSITION[i % BLADE_POSITION.length];
-          const isActive = active === cat;
-          return (
-            <button
-              key={cat}
-              type="button"
-              className={`${styles.blade} ${styles[`blade_${pos}`]} ${
-                isActive ? styles.bladeActive : ""
-              }`}
-              aria-pressed={isActive}
-              onClick={() => setActive(cat)}
-            >
-              <span className={styles.bladeLabel}>{cat}</span>
-              <span className={styles.bladeCount}>{byCategory[cat].length}</span>
-            </button>
-          );
-        })}
-
-        <div className={styles.hub} aria-hidden="true">
-          <span className={styles.hubCount}>{totalCount}</span>
-          <span className={styles.hubLabel}>techs</span>
+      <div className={styles.layout}>
+        <div className={styles.categories} role="group" aria-label={copy.categoriesLabel}>
+          {categories.map((category) => {
+            const size = byCategory[category].length;
+            return (
+              <button
+                key={category}
+                type="button"
+                className={`${styles.category} ${category === active ? styles.categoryActive : ""}`}
+                aria-pressed={category === active}
+                onClick={() => setActive(category)}
+                style={{ "--share": `${(size / total) * 100}%` } as CSSProperties}
+              >
+                <span className={styles.categoryName}>{category}</span>
+                <span className={styles.categorySize}>{size}</span>
+                <span className={styles.share} aria-hidden="true" />
+              </button>
+            );
+          })}
         </div>
-      </div>
 
-      <div className={styles.panel}>
-        <span className={styles.panelLabel}>{active}</span>
-        <div className={styles.tags}>
-          {activeEntries.map((s) => (
-            <div key={s.name} className={styles.tag}>
-              <span className={styles.tagName}>{s.name}</span>
-              <span className={styles.tagCount}>× {s.count}</span>
-            </div>
+        <ol className={styles.ranking} aria-label={copy.rankingLabel}>
+          {entries.map((entry) => (
+            <li key={entry.name} className={styles.entry}>
+              <span className={styles.entryName}>{entry.name}</span>
+              <span className={styles.bar} aria-hidden="true">
+                <span className={styles.barFill} style={{ width: `${(entry.count / highestCount) * 100}%` }} />
+              </span>
+              <span className={styles.entryCount}>{copy.projectsCount(entry.count)}</span>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
 
-      <p className={styles.note}>
-        Chaque technologie est comptée dans autant de projets livrés qu&apos;elle
-        a réellement servi — voir la section Projets.
-      </p>
+      <p className={styles.note}>{copy.note}</p>
     </section>
   );
 }

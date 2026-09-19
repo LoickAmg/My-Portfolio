@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { SECTIONS } from "@/lib/sections";
 import { runCommand } from "@/lib/commands";
-import SectionHeader from "./SectionHeader";
+import { useT } from "@/lib/i18n";
+import SceneHeader from "./SceneHeader";
 import sectionStyles from "./sections.module.css";
 import styles from "./Signal.module.css";
 
-const section = SECTIONS[4]; // signal
+const section = SECTIONS[5];
 
 interface Message {
   id: number;
@@ -17,18 +18,21 @@ interface Message {
 
 let nextId = 0;
 
-const WELCOME: Message[] = [
-  {
-    id: nextId++,
-    from: "system",
-    text: "Connexion établie. Tape une commande — essaie 'aide' pour la liste.",
-  },
-];
-
 export default function Signal() {
-  const [messages, setMessages] = useState<Message[]>(WELCOME);
+  const { lang, t } = useT();
+  // Le message d'accueil n'est pas stocké dans `messages` : il est dérivé à
+  // chaque rendu depuis la langue active (voir displayMessages ci-dessous),
+  // pour rester traduit si l'utilisateur bascule la langue avant d'avoir
+  // tapé quoi que ce soit. Une fois qu'un vrai échange existe, en revanche,
+  // cet historique reste dans la langue où il a été émis (comme un vrai fil
+  // de discussion) : la bascule de langue ne le réécrit pas rétroactivement.
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const threadRef = useRef<HTMLDivElement>(null);
+  const displayMessages: Message[] = [
+    { id: -1, from: "system", text: t.signal.welcome },
+    ...messages,
+  ];
 
   useEffect(() => {
     const el = threadRef.current;
@@ -41,13 +45,13 @@ export default function Signal() {
     if (!value) return;
 
     if (value.toLowerCase() === "clear") {
-      setMessages(WELCOME);
+      setMessages([]);
       setInput("");
       return;
     }
 
     const userMsg: Message = { id: nextId++, from: "user", text: value };
-    const { lines } = runCommand(value);
+    const { lines } = runCommand(value, lang);
     const systemMsgs: Message[] = lines.map((line) => ({
       id: nextId++,
       from: "system",
@@ -59,27 +63,28 @@ export default function Signal() {
   }
 
   return (
-    <section id={section.id} className={sectionStyles.section}>
-      <SectionHeader index={section.index} label={section.label} />
-      <h2 className={sectionStyles.title}>Signal</h2>
+    <section id={section.id} className={`${sectionStyles.scene} ${sectionStyles.scenePanel} ${styles.signal}`}>
+      <SceneHeader sectionId={section.id} />
 
-      <div className={styles.wrap}>
+      <div className={styles.layout}>
+        <div className={styles.aside}>
+          <h2 className={sectionStyles.title}>{t.signal.title}</h2>
+          <p className={sectionStyles.lead}>{t.signal.hint}</p>
+        </div>
+
         <div className={styles.panel}>
           <div className={styles.header}>
             <div className={styles.headerLeft}>
               <span className={styles.headerDot} />
-              <span className={styles.headerTitle}>Signal</span>
+              <span className={styles.headerTitle}>{t.signal.headerTitle}</span>
             </div>
             <div className={styles.status}>
               <span className={styles.statusDot} />
-              En ligne
+              {t.signal.online}
             </div>
           </div>
 
-          <div className={styles.modeLabel}>
-            interpréteur de commandes — whoami / projets / competences /
-            methode / contact
-          </div>
+          <div className={styles.modeLabel}>{t.signal.modeLabel}</div>
 
           <div
             className={styles.thread}
@@ -87,7 +92,7 @@ export default function Signal() {
             role="log"
             aria-live="polite"
           >
-            {messages.map((m) => (
+            {displayMessages.map((m) => (
               <div
                 key={m.id}
                 className={`${styles.row} ${
@@ -111,15 +116,15 @@ export default function Signal() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Tapez une commande…"
-              aria-label="Commande"
+              placeholder={t.signal.placeholder}
+              aria-label={t.signal.commandAriaLabel}
               autoComplete="off"
               spellCheck={false}
             />
             <button
               type="submit"
               className={styles.sendBtn}
-              aria-label="Envoyer"
+              aria-label={t.signal.sendAriaLabel}
             >
               <svg
                 width="16"
@@ -137,8 +142,6 @@ export default function Signal() {
           </form>
         </div>
       </div>
-
-      <p className={styles.hint}>whoami · projets · competences · methode · contact · clear</p>
     </section>
   );
 }

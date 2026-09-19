@@ -1,54 +1,106 @@
-.section {
+/*
+ * Socle commun des scènes. Chaque scène règle elle-même son espacement via
+ * --pt / --pb (haut / bas) : le rythme vertical varie d'une scène à l'autre
+ * au lieu de répéter un même gabarit. Une scène « panneau » change de fond et
+ * prend un bord supérieur en biais (--slant).
+ */
+
+.scene {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 96px 56px;
-  border-bottom: 1px solid var(--ink-12);
+  padding: var(--pt, 112px) 56px var(--pb, 112px);
 }
 
-.header {
+.scenePanel {
+  --slant: 44px;
+
+  background: var(--bg-panel);
+  clip-path: polygon(0 var(--slant), 100% 0, 100% 100%, 0 100%);
+  padding-top: calc(var(--pt, 112px) + var(--slant));
+}
+
+.head {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 40px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-55);
 }
 
-.headerLine {
-  width: 20px;
+.numeral {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1;
+  color: var(--accent-text);
+}
+
+.headRule {
+  width: 28px;
   height: 1px;
   background: var(--ink-40);
 }
 
-.headerLabel {
+.headMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.headName {
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--ink-70);
 }
 
+.headWhere {
+  font-family: var(--font-label);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+
 .title {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(32px, 4.4vw, 56px);
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+}
+
+.lead {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-70);
 }
 
 .placeholderNote {
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 12px;
-  color: var(--ink-40);
+  color: var(--ink-55);
   max-width: 560px;
 }
 
 @media (max-width: 899px) {
-  .section {
-    padding: 96px 22px 64px;
+  .scene {
+    padding: var(--pt-mobile, 72px) 22px var(--pb-mobile, 64px);
+  }
+
+  .scenePanel {
+    --slant: 28px;
+
+    padding-top: calc(var(--pt-mobile, 72px) + var(--slant));
+  }
+
+  .head {
+    margin-bottom: 28px;
+  }
+
+  .numeral {
+    font-size: 36px;
   }
 }

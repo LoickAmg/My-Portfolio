@@ -7,7 +7,7 @@ describe("<Signal />", () => {
   it("affiche le message d'accueil au chargement", () => {
     render(<Signal />);
     expect(
-      screen.getByText(/Connexion établie/i),
+      screen.getByText(/Tape une commande/i),
     ).toBeInTheDocument();
   });
 
@@ -21,7 +21,7 @@ describe("<Signal />", () => {
 
     expect(await screen.findByText("$ whoami")).toBeInTheDocument();
     expect(
-      screen.getByText("[Nom, rôle, une phrase de positionnement.]"),
+      screen.getByText(/Mahouna — Ingénieur IA/),
     ).toBeInTheDocument();
   });
 
@@ -35,6 +35,6 @@ describe("<Signal />", () => {
 
     await user.type(input, "clear{enter}");
     expect(screen.queryByText("$ whoami")).not.toBeInTheDocument();
-    expect(screen.getByText(/Connexion établie/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tape une commande/i)).toBeInTheDocument();
   });
 });

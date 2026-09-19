@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import styles from "./DialogueBox.module.css";
 
 export interface DialogueChoice {
@@ -10,30 +9,30 @@ export interface DialogueChoice {
   onSelect: () => void;
 }
 
-export default function DialogueBox({
-  channelLabel,
-  channelIndex,
-  speakerInitial,
-  speakerTag,
-  line,
-  choices,
-}: {
+interface DialogueBoxProps {
   channelLabel: string;
-  channelIndex: string;
   speakerInitial: string;
   speakerTag: string;
   line: string;
   choices: DialogueChoice[];
-}) {
+}
+
+// Boîte de dialogue façon jeu : un interlocuteur, une réplique, deux choix
+// qui mènent à une section. Aucune animation d'entrée : la réplique est là
+// dès l'arrivée, pour ne pas retarder la lecture.
+export default function DialogueBox({
+  channelLabel,
+  speakerInitial,
+  speakerTag,
+  line,
+  choices,
+}: DialogueBoxProps) {
   return (
     <div className={styles.panel}>
-      <div className={styles.meta}>
-        <span>{channelLabel}</span>
-        <span>{channelIndex}</span>
-      </div>
+      <p className={styles.meta}>{channelLabel}</p>
 
       <div className={styles.speaker}>
-        <div className={styles.avatar}>
+        <div className={styles.avatar} aria-hidden="true">
           <div className={styles.avatarShape} />
           <div className={styles.avatarLetter}>{speakerInitial}</div>
         </div>
@@ -46,18 +45,15 @@ export default function DialogueBox({
 
       <div className={styles.choices}>
         {choices.map((choice) => (
-          <motion.button
+          <button
             key={choice.key}
             type="button"
             className={`${styles.choice} ${choice.primary ? styles.choicePrimary : ""}`}
             onClick={choice.onSelect}
-            whileHover={{ x: 4 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.15 }}
           >
             <span className={styles.choiceKey}>{choice.key}</span>
             <span className={styles.choiceLabel}>{choice.label}</span>
-          </motion.button>
+          </button>
         ))}
       </div>
     </div>

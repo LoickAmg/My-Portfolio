@@ -1,17 +1,28 @@
-.wrap {
-  display: flex;
-  justify-content: center;
+.signal {
+  --pt: 96px;
+  --pb: 144px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.6fr) minmax(0, 1.4fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.aside {
+  position: sticky;
+  top: 96px;
 }
 
 .panel {
   position: relative;
   width: 100%;
-  max-width: 620px;
-  background: var(--bg-panel);
+  max-width: 660px;
+  background: var(--bg-void);
+  border: 1px solid var(--ink-25);
   overflow: hidden;
   clip-path: polygon(0 0, 96% 0, 100% 4%, 100% 100%, 4% 100%, 0 96%);
-  transform: rotate(-0.8deg);
-  box-shadow: 9px 9px 0 rgba(0, 0, 0, 0.35);
 }
 
 .header {
@@ -36,7 +47,8 @@
 }
 
 .headerTitle {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
+  font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -46,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 10px;
   letter-spacing: 0.1em;
   color: var(--ink-55);
@@ -62,10 +74,10 @@
 
 .modeLabel {
   padding: 14px 26px 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 10px;
   letter-spacing: 0.08em;
-  color: var(--ink-40);
+  color: var(--ink-55);
   text-transform: uppercase;
 }
 
@@ -96,13 +108,12 @@
   padding: 11px 15px;
   font-size: 13px;
   line-height: 1.5;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
 .bubbleUser {
   background: var(--bg-tag);
   color: var(--ink-70);
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   border-right: 3px solid var(--accent);
   clip-path: polygon(0 0, 100% 0, 100% 78%, 88% 100%, 0 100%);
 }
@@ -132,13 +143,13 @@
   background: var(--bg-bubble);
   border: none;
   color: var(--ink);
-  font-family: var(--font-mono);
+  font-family: var(--font-label);
   font-size: 12px;
   clip-path: polygon(0 0, 97% 0, 100% 100%, 3% 100%);
 }
 
 .input::placeholder {
-  color: var(--ink-40);
+  color: var(--ink-55);
 }
 
 .input:focus {
@@ -160,17 +171,23 @@
   color: var(--accent-ink);
 }
 
-.hint {
-  margin-top: 14px;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--ink-40);
-  text-transform: uppercase;
+@media (max-width: 1099px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .aside {
+    position: static;
+  }
 }
 
 @media (max-width: 899px) {
+  .signal {
+    --pt-mobile: 56px;
+    --pb-mobile: 88px;
+  }
+
   .thread {
     height: 320px;
   }

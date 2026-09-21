@@ -1,6 +1,12 @@
 .overlay {
   --card-w: clamp(150px, 15vw, 210px);
   --cut: 26px;
+  /* Une seule courbe pour tous les mouvements du menu : départ vif, arrivée
+     longue et douce, sans rebond. */
+  --glide: cubic-bezier(0.22, 1, 0.36, 1);
+  --glide-ms: 0.42s;
+  /* De combien l'éventail s'écarte de part et d'autre de la carte active. */
+  --spread: 18px;
 
   position: fixed;
   inset: 0;
@@ -107,18 +113,28 @@
   cursor: pointer;
   clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
   transform-origin: 50% 170%;
-  transform: translateY(calc(var(--d) * var(--d) * 5px)) rotate(calc(var(--d) * 4.5deg));
+  /* Les quatre valeurs sont des variables : l'état repos, actif et choisi
+     changent seulement leurs valeurs, et la liste de fonctions du transform
+     reste la même, ce qui permet d'interpoler chacune proprement. */
+  --sx: calc(clamp(-1, calc(var(--i) - var(--a)), 1) * var(--spread));
+  --dy: calc(var(--d) * var(--d) * 5px);
+  --rot: calc(var(--d) * 4.5deg);
+  --sc: 1;
+  transform: translateX(var(--sx)) translateY(var(--dy)) rotate(var(--rot)) scale(var(--sc));
   transition:
-    transform 0.18s ease,
-    opacity 0.18s ease,
-    background 0.15s ease;
-  animation: deal 0.2s ease-out backwards;
-  animation-delay: calc(var(--i) * 15ms);
+    transform var(--glide-ms) var(--glide),
+    opacity 0.24s ease,
+    background 0.3s ease;
+  animation: deal var(--glide-ms) var(--glide) backwards;
+  animation-delay: calc(var(--i) * 28ms);
 }
 
 .card[data-active="true"] {
+  --dy: -34px;
+  --rot: 0deg;
+  --sc: 1.06;
+
   background: var(--accent);
-  transform: translateY(-34px) rotate(0deg) scale(1.06);
 }
 
 .card[aria-current="true"] {
@@ -133,9 +149,13 @@
 }
 
 .hand[data-picking="true"] .card[data-picked="true"] {
+  --sx: 0px;
+  --dy: -6vh;
+  --rot: 0deg;
+  --sc: 1.3;
+
   opacity: 1;
   background: var(--accent);
-  transform: translateY(-6vh) rotate(0deg) scale(1.3);
   z-index: 20;
 }
 
@@ -156,7 +176,7 @@
 @keyframes deal {
   from {
     opacity: 0;
-    transform: translateY(70px) rotate(0deg);
+    transform: translateX(0) translateY(80px) rotate(0deg) scale(0.96);
   }
 }
 

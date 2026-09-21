@@ -148,17 +148,29 @@ export default function ArcanaMenu({ activeId, onClose, onSelect }: ArcanaMenuPr
       </div>
 
       <div className={styles.table} onClick={handleTableClick}>
-        <ul ref={listRef} className={styles.hand} aria-label={copy.navLabel} data-picking={pickedId !== null}>
+        <ul
+          ref={listRef}
+          className={styles.hand}
+          aria-label={copy.navLabel}
+          data-picking={pickedId !== null}
+          style={{ "--a": activeIndex } as CSSProperties}
+        >
           {SECTIONS.map((section, index) => {
             const arcana = arcanaFor(section.id);
             const name = copy.names[section.id] ?? section.label;
             const label = sectionLabel(section.id, lang);
             const isCurrent = section.id === activeId;
             return (
+              // Le survol se lit sur l'élément de liste, dont la boîte ne bouge
+              // pas : la carte, elle, se soulève et s'écarterait de sous le
+              // pointeur, ce qui ferait clignoter la carte voisine.
               <li
                 key={section.id}
                 className={styles.slot}
                 style={{ "--i": index, "--d": index - (count - 1) / 2 } as CSSProperties}
+                onPointerEnter={(event) => {
+                  if (event.pointerType === "mouse") cardRefs.current[index]?.focus({ preventScroll: true });
+                }}
               >
                 <button
                   ref={(element) => {
@@ -172,9 +184,6 @@ export default function ArcanaMenu({ activeId, onClose, onSelect }: ArcanaMenuPr
                   data-picked={pickedId === section.id}
                   onClick={() => choose(section.id)}
                   onFocus={() => setActiveIndex(index)}
-                  onPointerEnter={(event) => {
-                    if (event.pointerType === "mouse") event.currentTarget.focus({ preventScroll: true });
-                  }}
                 >
                   <ArcanaCardFace
                     sectionId={section.id}

@@ -6,6 +6,7 @@ import styles from "./ExperienceBoundary.module.css";
 interface ExperienceBoundaryProps {
   message: string;
   retryLabel: string;
+  className?: string;
   children: ReactNode;
 }
 
@@ -38,6 +39,10 @@ export default class ExperienceBoundary extends Component<ExperienceBoundaryProp
         </div>
       );
     }
-    return <div key={this.state.attempt}>{this.props.children}</div>;
+    return (
+      <div key={this.state.attempt} className={this.props.className}>
+        {this.props.children}
+      </div>
+    );
   }
 }

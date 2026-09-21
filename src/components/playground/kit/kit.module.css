@@ -133,6 +133,10 @@
   color: var(--ink);
 }
 
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
 .btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;

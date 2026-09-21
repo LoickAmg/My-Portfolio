@@ -49,7 +49,9 @@ au build, sinon `localhost` en développement.
   Playground est en canvas 2D
 - **Lenis** pour le défilement lissé, désactivé sous `prefers-reduced-motion`
 - **Vitest** et **React Testing Library** pour les tests
-- Animations en CSS uniquement, et seulement quand elles orientent l'attention
+- Animations en CSS (dans les jeux, dessinées dans le canvas), et seulement
+  quand elles orientent l'attention ou confirment une action ; toutes coupées
+  sous `prefers-reduced-motion`
 
 ### Polices
 

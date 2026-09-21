@@ -100,6 +100,19 @@
   background: var(--bg-void);
 }
 
+/* Changer d'expérience : la nouvelle apparaît en 150 ms, ce qui confirme que
+   l'onglet a bien été pris en compte. */
+.swap {
+  animation: swap 0.15s ease-out;
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
 .stageHead {
   display: flex;
   align-items: flex-start;

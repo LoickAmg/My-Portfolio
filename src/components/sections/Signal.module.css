@@ -93,6 +93,15 @@
 
 .row {
   display: flex;
+  /* Une nouvelle ligne se signale : on voit où la réponse est arrivée. */
+  animation: lineIn 0.14s ease-out;
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 
 .rowUser {

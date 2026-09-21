@@ -36,6 +36,7 @@
   width: 28px;
   height: 1px;
   background: var(--ink-40);
+  transform-origin: left;
 }
 
 .headMeta {
@@ -83,6 +84,53 @@
   font-size: 12px;
   color: var(--ink-55);
   max-width: 560px;
+}
+
+/*
+ * Arrivée dans une scène : le chiffre romain, le filet et le nom de l'arcane
+ * se posent quand l'en-tête monte dans l'écran. C'est le repère qui signale
+ * qu'on change de carte. L'animation suit le défilement (aucun minuteur) et
+ * n'existe que là où le navigateur la gère : ailleurs l'en-tête reste
+ * simplement affiché.
+ */
+@keyframes cutIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+@keyframes ruleGrow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .head {
+    view-timeline: --scene-head block;
+  }
+
+  .numeral,
+  .headMeta {
+    animation: cutIn linear both;
+    animation-timeline: --scene-head;
+    animation-range: entry 0% cover 30%;
+  }
+
+  .headRule {
+    animation: ruleGrow linear both;
+    animation-timeline: --scene-head;
+    animation-range: entry 0% cover 30%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .numeral,
+  .headMeta,
+  .headRule {
+    animation: none;
+  }
 }
 
 @media (max-width: 899px) {

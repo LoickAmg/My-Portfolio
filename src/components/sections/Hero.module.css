@@ -78,6 +78,10 @@
   background: var(--accent-text);
 }
 
+.cta:active {
+  transform: translateY(1px);
+}
+
 .link {
   padding: 14px 0;
   background: transparent;
@@ -139,6 +143,9 @@
   width: min(232px, 52%);
   margin-right: 12px;
   transform: rotate(3deg);
+  /* La carte est tirée à l'ouverture de la page : elle présente le principe
+     du site, une section = une carte, comme le fait le menu. */
+  animation: dealt 0.24s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
 
 .dialogue {
@@ -147,6 +154,22 @@
   width: 100%;
   max-width: 480px;
   margin-top: -8px;
+  /* Arrive juste après la carte : l'œil suit l'ordre carte, puis réplique. */
+  animation: lineIn 0.2s ease-out 0.14s backwards;
+}
+
+@keyframes dealt {
+  from {
+    opacity: 0;
+    transform: translateY(44px) rotate(-4deg);
+  }
+}
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 @media (max-width: 1099px) {

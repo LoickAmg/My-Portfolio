@@ -17,9 +17,10 @@ import {
   Segmented,
   Viewport,
 } from "./kit/controls";
-import { useCanvasFit, useFrameLoop, useThemeColors, useVisibleRef } from "./kit/hooks";
+import { prefersReducedMotion, useCanvasFit, useFrameLoop, useThemeColors, useVisibleRef } from "./kit/hooks";
 
 const GRID_SIZE = 18;
+const EAT_PULSE_MS = 220;
 const SWIPE_THRESHOLD_PX = 24;
 
 type Phase = "ready" | "playing" | "paused" | "over";
@@ -70,6 +71,8 @@ export default function Snake() {
   const accumulatorRef = useRef(0);
   const swipeOriginRef = useRef<{ x: number; y: number } | null>(null);
   const swipedRef = useRef(false);
+  // Anneau qui s'élargit là où la pomme vient d'être mangée : confirme le point.
+  const eatRef = useRef<{ x: number; y: number; start: number } | null>(null);
   const sizeRef = useRef({ width: 0, height: 0 });
 
   const palette = useThemeColors();
@@ -122,6 +125,22 @@ export default function Snake() {
       ctx.fillRect(offsetX + segment.x * cell + pad, offsetY + segment.y * cell + pad, cell - pad * 2, cell - pad * 2);
     });
     ctx.globalAlpha = 1;
+
+    const eat = eatRef.current;
+    if (eat) {
+      const progress = (performance.now() - eat.start) / EAT_PULSE_MS;
+      if (progress >= 1) {
+        eatRef.current = null;
+      } else {
+        ctx.globalAlpha = 1 - progress;
+        ctx.strokeStyle = colors.accent;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(offsetX + (eat.x + 0.5) * cell, offsetY + (eat.y + 0.5) * cell, cell * (0.45 + 0.85 * progress), 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
   }, [palette]);
 
   useCanvasFit(canvasRef, (width, height) => {
@@ -152,8 +171,12 @@ export default function Snake() {
       const interval = tickInterval(BASE_TICK_MS[speedRef.current], stateRef.current.score);
       while (accumulatorRef.current >= interval) {
         accumulatorRef.current -= interval;
-        const next = step(stateRef.current, GRID_SIZE, Math.random, modeRef.current === "wrap");
+        const previous = stateRef.current;
+        const next = step(previous, GRID_SIZE, Math.random, modeRef.current === "wrap");
         stateRef.current = next;
+        if (next.alive && next.score > previous.score && !prefersReducedMotion()) {
+          eatRef.current = { x: next.snake[0].x, y: next.snake[0].y, start: performance.now() };
+        }
         if (!next.alive) {
           finish(next.score);
           break;
@@ -178,6 +201,7 @@ export default function Snake() {
   const restart = useCallback(() => {
     stateRef.current = createInitialState(GRID_SIZE);
     accumulatorRef.current = 0;
+    eatRef.current = null;
     setScore(0);
     setLength(3);
     setPhase("ready");

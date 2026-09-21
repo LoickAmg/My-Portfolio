@@ -187,7 +187,7 @@ export default function Playground() {
             )}
           </header>
 
-          <ExperienceBoundary key={active.id} message={copy.failure} retryLabel={copy.retry}>
+          <ExperienceBoundary key={active.id} className={styles.swap} message={copy.failure} retryLabel={copy.retry}>
             <ActiveComponent />
           </ExperienceBoundary>
 

@@ -105,6 +105,31 @@ html[data-theme="light"] {
   color-scheme: light;
 }
 
+/*
+ * Position et rayon du halo qui révèle la carte cachée du Hero. Déclarées
+ * avec un type pour que leurs transitions soient interpolées : le halo suit le
+ * pointeur avec un léger retard et s'ouvre peu à peu au lieu d'apparaître d'un
+ * bloc. Dans globals.css car les noms de @property ne sont pas isolés par les
+ * modules CSS.
+ */
+@property --reveal-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+@property --reveal-y {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 40%;
+}
+
+@property --reveal-r {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 html,
 body {
   max-width: 100vw;

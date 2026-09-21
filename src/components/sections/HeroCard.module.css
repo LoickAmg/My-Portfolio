@@ -1,0 +1,119 @@
+.root {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+
+  perspective: 900px;
+  cursor: pointer;
+  /* Le doigt peut faire défiler la page : seul l'appui est capté. */
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    --reveal-r 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    --reveal-x 0.22s ease-out,
+    --reveal-y 0.22s ease-out;
+}
+
+/* Le halo s'ouvre peu à peu quand le pointeur arrive, et se referme quand il
+   part. */
+.root[data-near="true"] {
+  --reveal-r: 96px;
+}
+
+.tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.22s ease-out;
+}
+
+/* Au départ du pointeur, la carte se repose plus lentement qu'elle ne s'est
+   inclinée. */
+.root:not([data-near="true"]) .tilt {
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.turner {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.turner[data-spinning="true"] {
+  animation: turn 0.9s cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+.front,
+.back {
+  backface-visibility: hidden;
+}
+
+.back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+
+/* Dos de la carte : le losange du Fou sur un quadrillage d'arlequin. */
+.backFace {
+  position: absolute;
+  inset: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background-color: var(--bg-panel);
+  background-image:
+    repeating-linear-gradient(45deg, transparent 0 13px, var(--ink-12) 13px 14px),
+    repeating-linear-gradient(-45deg, transparent 0 13px, var(--ink-12) 13px 14px);
+  color: var(--ink);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--cut) + 2px) 0,
+    100% calc(var(--cut) - 2px),
+    100% 100%,
+    calc(var(--cut) - 2px) 100%,
+    0 calc(100% - var(--cut) + 2px)
+  );
+}
+
+.backFace svg {
+  width: 100%;
+  height: auto;
+  padding: 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--ink-25);
+}
+
+/* Face cachée : opaque, mais visible seulement dans le halo. */
+.reveal {
+  --halo: max(var(--reveal-r), 0.01px);
+
+  position: absolute;
+  inset: 2px;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle var(--halo) at var(--reveal-x) var(--reveal-y), #000 55%, transparent 100%);
+  mask-image: radial-gradient(circle var(--halo) at var(--reveal-x) var(--reveal-y), #000 55%, transparent 100%);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--cut) + 2px) 0,
+    100% calc(var(--cut) - 2px),
+    100% 100%,
+    calc(var(--cut) - 2px) 100%,
+    0 calc(100% - var(--cut) + 2px)
+  );
+}
+
+@keyframes turn {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turner[data-spinning="true"] {
+    animation: none;
+  }
+
+  .reveal {
+    display: none;
+  }
+}

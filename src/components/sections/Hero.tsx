@@ -8,7 +8,7 @@ import { scrollToSection } from "@/lib/scroll";
 import { useT, sectionLabel } from "@/lib/i18n";
 import type { Project } from "@/lib/types";
 import DialogueBox from "@/components/DialogueBox";
-import ArcanaCardFace, { ArcanaCardFrame } from "@/components/arcana/ArcanaCardFace";
+import HeroCard from "./HeroCard";
 import SceneHeader from "./SceneHeader";
 import sectionStyles from "./sections.module.css";
 import styles from "./Hero.module.css";
@@ -68,16 +68,13 @@ export default function Hero() {
 
         <div className={styles.stage}>
           <div className={styles.card} style={CARD_SIZES}>
-            <ArcanaCardFrame>
-              <ArcanaCardFace
-                sectionId={section.id}
-                numeral={arcana?.numeral ?? ""}
-                name={t.arcana.names[section.id]}
-                sectionIndex={section.index}
-                sectionName={sectionLabel(section.id, lang)}
-                highlighted
-              />
-            </ArcanaCardFrame>
+            <HeroCard
+              sectionId={section.id}
+              numeral={arcana?.numeral ?? ""}
+              name={t.arcana.names[section.id]}
+              sectionIndex={section.index}
+              sectionName={sectionLabel(section.id, lang)}
+            />
           </div>
 
           <div className={styles.dialogue}>

@@ -95,6 +95,10 @@ Le bouton du rail (« Menu » sur mobile) ouvre une main de cartes en éventail,
 ou une grille sur petit écran. Les sept illustrations sont dessinées pour ce
 site, sans reprendre de visuel existant.
 
+Dans le Hero, la carte du Fou s'incline vers le pointeur, révèle sous un halo
+une seconde carte cachée (dessinée elle aussi pour le site) et fait un tour sur
+elle-même au clic. Ces effets sont coupés sous `prefers-reduced-motion`.
+
 Accessibilité : dialogue modal, focus piégé puis rendu au bouton, flèches,
 Début, Fin et Échap, une seule carte active à la fois, animations coupées sous
 `prefers-reduced-motion`, textes à 4,5:1 de contraste ou plus dans les deux

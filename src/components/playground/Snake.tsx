@@ -69,6 +69,7 @@ export default function Snake() {
   const speedRef = useRef<SpeedId>("normal");
   const accumulatorRef = useRef(0);
   const swipeOriginRef = useRef<{ x: number; y: number } | null>(null);
+  const swipedRef = useRef(false);
   const sizeRef = useRef({ width: 0, height: 0 });
 
   const palette = useThemeColors();
@@ -220,6 +221,9 @@ export default function Snake() {
 
   const handlePointerDown = (event: React.PointerEvent<HTMLCanvasElement>) => {
     swipeOriginRef.current = { x: event.clientX, y: event.clientY };
+    swipedRef.current = false;
+    // Le doigt peut sortir du plateau en plein glissement : on garde le geste.
+    event.currentTarget.setPointerCapture(event.pointerId);
     focusCanvas();
   };
 
@@ -230,11 +234,18 @@ export default function Snake() {
     const dy = event.clientY - origin.y;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < SWIPE_THRESHOLD_PX) return;
     steer(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : dy > 0 ? "down" : "up");
+    swipedRef.current = true;
     swipeOriginRef.current = { x: event.clientX, y: event.clientY };
   };
 
   const clearSwipe = () => {
     swipeOriginRef.current = null;
+  };
+
+  // Un simple appui sur le plateau lance la partie, comme l'indique le voile.
+  const handlePointerUp = () => {
+    if (swipeOriginRef.current && !swipedRef.current && phaseRef.current === "ready") togglePause();
+    clearSwipe();
   };
 
   const modeOptions = [
@@ -261,11 +272,10 @@ export default function Snake() {
             onKeyDown={handleKeyDown}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
-            onPointerUp={clearSwipe}
-            onPointerLeave={clearSwipe}
+            onPointerUp={handlePointerUp}
             onPointerCancel={clearSwipe}
           />
-          {phase === "ready" && <Overlay title={copy.ready} text={copy.readyText} />}
+          {phase === "ready" && <Overlay passthrough title={copy.ready} text={copy.readyText} />}
           {phase === "paused" && (
             <Overlay
               title={copy.paused}
@@ -312,13 +322,15 @@ export default function Snake() {
               </Button>
               <Button onClick={restart}>{copy.restart}</Button>
             </ButtonRow>
-            <DPad
-              label={copy.dpad}
-              labels={{ up: copy.up, down: copy.down, left: copy.left, right: copy.right }}
-              onDirection={steer}
-            />
           </PanelSection>
         </>
+      }
+      controls={
+        <DPad
+          label={copy.dpad}
+          labels={{ up: copy.up, down: copy.down, left: copy.left, right: copy.right }}
+          onDirection={steer}
+        />
       }
       caption={
         <>

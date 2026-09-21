@@ -153,15 +153,20 @@ export function Viewport({ children, ratio = "1 / 1", maxWidth, ref, label }: Vi
 interface LayoutProps {
   viewport: ReactNode;
   panel: ReactNode;
+  // Commandes à garder sous les yeux pendant la partie : placées juste sous la
+  // zone de jeu, pas dans le panneau, qui passe sous la ligne de flottaison
+  // sur mobile.
+  controls?: ReactNode;
   caption?: ReactNode;
 }
 
-export function ExperienceLayout({ viewport, panel, caption }: LayoutProps) {
+export function ExperienceLayout({ viewport, panel, controls, caption }: LayoutProps) {
   return (
     <div className={styles.experience}>
       <div className={styles.layout}>
         <div className={styles.viewportColumn}>
           {viewport}
+          {controls}
           {caption && <p className={styles.caption}>{caption}</p>}
         </div>
         <div className={styles.panel}>{panel}</div>
@@ -174,11 +179,14 @@ interface OverlayProps {
   title: string;
   text?: string;
   action?: ReactNode;
+  // Sans bouton : le voile laisse passer les gestes vers la zone de jeu, sinon
+  // un glissement du doigt pour démarrer n'atteint jamais le canvas.
+  passthrough?: boolean;
 }
 
-export function Overlay({ title, text, action }: OverlayProps) {
+export function Overlay({ title, text, action, passthrough }: OverlayProps) {
   return (
-    <div className={styles.overlay}>
+    <div className={passthrough ? `${styles.overlay} ${styles.overlayPassthrough}` : styles.overlay}>
       <p className={styles.overlayTitle}>{title}</p>
       {text && <p className={styles.overlayText}>{text}</p>}
       {action}
@@ -215,6 +223,11 @@ export function DPad({ label, labels, onDirection }: DPadProps) {
           onPointerDown={(event) => {
             event.preventDefault();
             onDirection(key.direction);
+          }}
+          // Clavier et lecteurs d'écran : Entrée et Espace ne déclenchent qu'un
+          // clic (detail 0), le doigt est déjà traité par pointerdown.
+          onClick={(event) => {
+            if (event.detail === 0) onDirection(key.direction);
           }}
         >
           {key.glyph}

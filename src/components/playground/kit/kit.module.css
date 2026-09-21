@@ -28,6 +28,9 @@
   border-left: 4px solid var(--accent);
   overflow: hidden;
   touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .viewport canvas {
@@ -250,6 +253,10 @@
   text-align: center;
 }
 
+.overlayPassthrough {
+  pointer-events: none;
+}
+
 .overlayTitle {
   margin: 0;
   font-family: var(--font-display);
@@ -280,8 +287,8 @@
     ". up ."
     "left . right"
     ". down .";
-  grid-template-columns: repeat(3, 52px);
-  grid-template-rows: repeat(3, 52px);
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(3, 56px);
   gap: 6px;
   justify-content: center;
 }
@@ -293,6 +300,10 @@
   font-size: 20px;
   touch-action: manipulation;
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .dpadKey:active {

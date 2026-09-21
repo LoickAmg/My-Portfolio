@@ -21,7 +21,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || (vercelProductionHost ? `https://${vercelProductionHost}` : "http://localhost:3000");
 
 // Le nombre de projets vient du catalogue : la description ne se périme pas.
-export const SITE_DESCRIPTION = `Ingénieur IA et architecture logicielle. ${projectsData.length} projets livrés et publiés sur GitHub, surtout en Python et en Rust, et la méthode qui les relie.`;
+export const SITE_DESCRIPTION = `Ingénieur IA et Architecte Logiciel. ${projectsData.length} projets livrés et publiés sur GitHub, surtout en Python et en Rust, et la méthode qui les relie.`;
 
 export const CONTACT_EMAIL = "mahounaamg@gmail.com";
 export const GITHUB_URL = "https://github.com/LoickAmg";

@@ -63,7 +63,7 @@ export async function renderOgImage(): Promise<ImageResponse> {
                 color: COLORS.inkMuted,
               }}
             >
-              Ingénieur IA & architecture logicielle
+              Ingénieur IA & Architecte Logiciel
             </div>
           </div>
         </div>

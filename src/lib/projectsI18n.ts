@@ -190,7 +190,7 @@ const EN: Record<string, ProjectOverrideEn> = {
   },
   "manga-quoting": {
     tagline:
-      "Manga quote database: minimalist paper/ink design, search by series and theme, public REST API.",
+      "Manga quotes: paper/ink design, accent-insensitive search, share image per quote, public REST API. Rewritten from Django to Next.js.",
   },
   "movie-catalog-web": {
     tagline: "Movie/show catalog with likes and personalized recommendations, no backend or API key.",

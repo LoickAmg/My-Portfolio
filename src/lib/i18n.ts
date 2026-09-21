@@ -46,7 +46,7 @@ const fr = {
     toFrench: "Passer en français",
   },
   hero: {
-    eyebrow: "Ingénieur IA & Architecture logicielle",
+    eyebrow: "Ingénieur IA & Architecte Logiciel",
     headingLine1: "De l'IA",
     headingLine2: "à l'architecture logicielle,",
     headingAccent: (n: number) => `${n} projets livrés.`,
@@ -344,7 +344,7 @@ const fr = {
     unknown: (raw: string) => `Commande inconnue : "${raw}". Tape 'aide' pour la liste.`,
     emptyProjects: "Aucun projet dans le catalogue pour le moment.",
     whoami: (delivered: number) => [
-      "Mahouna — Ingénieur IA & Architecture logicielle.",
+      "Mahouna — Ingénieur IA & Architecte Logiciel.",
       `${delivered} projets livrés, chacun avec son dépôt GitHub.`,
     ],
     skills: (top: string) => [`Les plus utilisées : ${top}.`, "Détail dans la section Compétences."],
@@ -406,7 +406,7 @@ const en: typeof fr = {
     toFrench: "Passer en français",
   },
   hero: {
-    eyebrow: "AI Engineer & Software Architecture",
+    eyebrow: "AI Engineer & Software Architect",
     headingLine1: "From AI",
     headingLine2: "to software architecture,",
     headingAccent: (n: number) => `${n} shipped projects.`,
@@ -704,7 +704,7 @@ const en: typeof fr = {
     unknown: (raw: string) => `Unknown command: "${raw}". Type 'help' for the list.`,
     emptyProjects: "No projects in the catalog at the moment.",
     whoami: (delivered: number) => [
-      "Mahouna — AI Engineer & Software Architecture.",
+      "Mahouna — AI Engineer & Software Architect.",
       `${delivered} shipped projects, each with its GitHub repository.`,
     ],
     skills: (top: string) => [`Most used: ${top}.`, "Details in the Skills section."],

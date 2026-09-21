@@ -419,10 +419,10 @@
   {
     "slug": "manga-quoting",
     "name": "KOMA — Manga Quoting",
-    "tagline": "Base de citations manga : design minimaliste papier/encre, recherche par série et thème, API REST publique.",
+    "tagline": "Citations manga : design papier/encre, recherche sans accents, image de partage par citation, API REST publique. Réécrit de Django à Next.js.",
     "stack": [
-      "Django",
-      "DRF"
+      "Next.js",
+      "TypeScript"
     ],
     "workType": "web",
     "year": 2026,

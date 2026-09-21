@@ -111,6 +111,17 @@ body {
   overflow-x: hidden;
 }
 
+/*
+ * Sur body, `hidden` en fait un conteneur de défilement qui ne défile jamais
+ * (html a déjà pris la propagation vers le viewport). Conséquences : les
+ * éléments sticky ne collent pas et les animations liées au défilement
+ * s'accrochent à ce body immobile. `clip` coupe le débordement sans créer de
+ * conteneur ; `hidden` ci-dessus reste le repli des anciens navigateurs.
+ */
+body {
+  overflow-x: clip;
+}
+
 body {
   min-height: 100%;
   background: var(--bg-void);
@@ -146,10 +157,10 @@ button {
  * coupent déjà le motion piloté par JS à la source. Ce bloc couvre l'autre
  * moitié : les transitions/animations purement CSS (survol des cartes
  * projets, boutons, toggles, etc.) qui n'ont pas de logique JS à désactiver.
- * Ne s'applique pas aux animations Framer Motion (elles animent via des
- * styles inline en JS, hors de portée de CSS) — c'est pour ça que le hook
- * ci-dessus reste nécessaire en parallèle plutôt que de compter uniquement
- * sur ce media query.
+ * Les animations dessinées en JS (canvas, Three.js) sont hors de portée de
+ * CSS : elles interrogent la préférence elles-mêmes. Les animations liées au
+ * défilement ignorent la durée : leur bloc coupe donc explicitement
+ * l'animation sous ce media query (voir sections.module.css).
  */
 @media (prefers-reduced-motion: reduce) {
   *,
